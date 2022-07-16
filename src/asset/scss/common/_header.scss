@@ -1,0 +1,71 @@
+.header {
+    height: $header-height;
+    // background-color: #000;
+    // background-color: #fff;;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    z-index: 1000;
+    width: calc(100% - $width-sider);
+    border-bottom: $block-border;
+    @include flex-between;
+    @include padding-app;
+    h1 {
+        margin: 0px;
+        color: $while-color;
+    }
+    &__title {
+        display: flex;
+        align-items: center;
+        p {
+            color: $while-color;
+        }
+        img {
+            height: 60px;
+        }
+        & img:first-child {
+            margin-right: 5px;
+        }
+    }
+    &__search {
+        width: 60%;
+        .ant-btn {
+            // background-color: rgb(75, 112, 190);
+            background-color: $container-color;
+            span {
+                font-size: 25px;
+                font-weight: 700;
+            }
+        }
+    }
+    &__account {
+        display: flex;
+        align-items: center;
+        &__img {
+            height: $height-module;
+            width: $height-module;
+            overflow: hidden;
+            border-radius: 50%;
+            margin-right: 20px;
+            img {
+                height: 100%;
+            }
+        }
+        p {
+            color: $while-color;
+            font-size: 18px;
+            font-weight: 400;
+            margin: {
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 30px;
+            }
+            
+        }
+        svg {
+            color: #fff;
+        }
+    }
+
+}

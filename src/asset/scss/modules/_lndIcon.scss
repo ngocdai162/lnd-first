@@ -1,0 +1,31 @@
+
+    .lnd-icon {
+        width:  $height-module;
+        height: $height-module;
+        background-image: linear-gradient(to bottom right,#ff00c8, yellow);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;    
+        &-span {
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        p {
+            font-size: 14px;
+            font-weight: 400;
+            margin: 0px;
+            color: rgb(8, 8, 8);
+            color: #fff;
+            z-index: 2;
+        }
+    }

@@ -1,0 +1,35 @@
+@mixin flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@mixin flex-reverse {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+@mixin primary-text {
+    font-size: $text-size;
+    color: $text-color;
+    font-weight: $text-weight;
+    margin: 0px;
+}
+@mixin padding-app {
+    padding: {
+        left: 24px;
+        right: 24px;
+    }
+}
+
+@mixin text-18 {
+    font-size: 18px;
+    font-weight: 500;
+    color: $text-color;
+    margin: 0px;
+}
+

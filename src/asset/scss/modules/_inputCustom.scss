@@ -1,0 +1,13 @@
+.input-custom {
+    height: $height-module;
+    width: 100%;
+    input {
+        @include primary-text;
+        width: 100%;
+        height: 100%;
+        border-radius: $radius-10;
+        border: $block-border;
+        outline: none;
+        padding: 0px 8px;
+    }
+}

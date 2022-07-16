@@ -1,0 +1,25 @@
+.input-search {
+    height: $height-module;
+    position: relative;
+    @include flex-between;
+    input {
+        height: 100%;
+        width: 100%;
+        border-radius: $radius-10;
+        border-radius: 50px;
+        border: $block-border;
+        outline: rgb(231, 95, 41);
+        padding: {
+            left: 20px;
+            right: 50px;
+        }
+    }
+    button {
+        position: absolute;
+        right: 4px;
+        height: 40px;
+        width: 40px;
+        border: none;
+    }
+
+}
