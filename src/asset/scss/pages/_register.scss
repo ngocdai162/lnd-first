@@ -58,7 +58,7 @@
                         }
                 }
                 .ant-tabs-tab.ant-tabs-tab-active {
-                    border-bottom: 6px solid  $tab-color!important;
+                    border-bottom: 6px solid  $primary-color!important;
                     z-index: 2;
                   }
                 .ant-tabs-nav::before {
@@ -67,36 +67,66 @@
                 .ant-tabs-tab-active {
                     div {
                       color: $primary-color;
-                      color:  $tab-color!important;
+                      color:  $primary-color!important;
                       &:hover {
-                         color:   $tab-color!important;
+                         color:   $primary-color!important;
                       }
                     }
                 } 
                 &__form {
-                    &__item {
+                   @include flex-reverse;
+                   height: 300px;
+                    &__content {
                         width: 100%;
-                        p {
-                            color: $while-color;
-                            margin: 4px 0px;
-                        }
-                        padding: 10px 0px;
-                        input {
+                        &__item {
                             width: 100%;
-                            background: none;
-                            outline: none;
-                            color: $while-color;
-                            border: {
-                              top: 0;
-                              left: 0;
-                              right: 0;
-                              bottom: 0.5px solid $while-color;
+                            p {
+                                color: $while-color;
+                                margin: 4px 0px;
+                            }
+                            padding: 10px 0px;
+                            input {
+                                width: 100%;
+                                background: none;
+                                outline: none;
+                                color: $while-color;
+                                border: {
+                                  top: 0;
+                                  left: 0;
+                                  right: 0;
+                                  bottom: 0.5px solid $while-color;
+                                }
                             }
                         }
                     }
                     &__btn {
-                        display: flex;
-                        justify-content: space-between;
+                        width: 100%;
+                        & button:first-child {
+                            margin-right: 20px;
+                        }
+                    }
+                    .upload-avt {
+                        .ant-upload {
+                            background: none;
+                            & :hover {
+                                button {
+                                    color: $primary-color;
+                                    span {
+                                        svg {
+
+                                            color: $primary-color;
+                                        }
+
+                                    }
+                                }
+                            }
+                            button {
+                                background-color: transparent;
+                                color: $while-color;
+                                border: none;
+                            }
+                        }
+                      
                     }
                 }
             }

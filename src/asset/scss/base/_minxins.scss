@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 @mixin primary-text {
     font-size: $text-size;
@@ -25,11 +26,38 @@
         right: 24px;
     }
 }
+@mixin margin-app {
+    margin: {
+        left: 24px;
+        right: 24px;
+    }
+}
 
 @mixin text-18 {
     font-size: 18px;
-    font-weight: 500;
-    color: $text-color;
+    font-weight: 400;
+    color: $while-color;
     margin: 0px;
 }
+
+
+@keyframes rotate180 {
+    from {
+         rotate: 0deg;
+      }
+      to {
+        rotate: 180deg;
+      }
+}
+@mixin rotate180 {
+    animation: rotate180 3s;
+}
+// @keyframes rotate180 {
+//     from :{
+
+//     } to {
+
+//     }
+// }
+
 

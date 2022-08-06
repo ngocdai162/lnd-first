@@ -1,0 +1,11 @@
+.crypto-logo {
+    border-radius: 50%;
+    width: $width-crypto;
+    height: $width-crypto;
+    @include flex-center;
+    overflow: hidden;
+    img {
+        width:100%;
+        height: 100%;
+    }
+}

@@ -1,0 +1,16 @@
+.container {
+    width: calc(100% - $width-sider);
+    position: absolute;
+    margin-top: getAdd($header-height , 48px);
+    right: 0px;
+    @include margin-app;
+    margin: 0px;
+    border-top-left-radius: $radius-10;
+    border-top-right-radius: $radius-10;
+    @include padding-app;
+    padding-top: calc($header-height + $padding-block);
+    &__main {
+      height: 400px;
+    }
+
+}

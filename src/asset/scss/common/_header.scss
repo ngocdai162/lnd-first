@@ -1,8 +1,7 @@
 .header {
     height: $header-height;
-    // background-color: #000;
-    // background-color: #fff;;
     position: fixed;
+    background-color: $app-color;
     right: 0px;
     top: 0px;
     z-index: 1000;
@@ -31,7 +30,7 @@
         width: 60%;
         .ant-btn {
             // background-color: rgb(75, 112, 190);
-            background-color: $container-color;
+            background-color: $primary-color;
             span {
                 font-size: 25px;
                 font-weight: 700;
@@ -65,6 +64,11 @@
         }
         svg {
             color: #fff;
+            &:hover {
+                @include rotate180;
+                animation: rotate180 4s;
+                transform: rotate(180deg) !important;
+            }
         }
     }
 

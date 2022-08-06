@@ -1,4 +1,7 @@
 @function getPercent($a , $b) {
     @return (($a / $b) * 100%)
 };
+@function getAdd($a , $b) {
+    @return ($a + $b);
+}
 

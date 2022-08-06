@@ -2,6 +2,7 @@
     height: $height-module;
     position: relative;
     @include flex-between;
+    width: 100%;
     input {
         height: 100%;
         width: 100%;
@@ -16,10 +17,17 @@
     }
     button {
         position: absolute;
+        background-color: $primary-color;
         right: 4px;
         height: 40px;
         width: 40px;
         border: none;
+        svg {
+            color: $while-color;
+        }
+        &:hover {
+            border: $block-border;
+            background-color: $primary-color-hover;
+        }
     }
-
 }

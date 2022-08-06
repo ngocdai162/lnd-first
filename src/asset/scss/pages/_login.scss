@@ -46,10 +46,14 @@
                                 height: 100%;
                                
                             }
+                            .ant-input-affix-wrapper-status-error {
+                                height: 100%;
+                            }
                         }
                         height: 100%;
                        
                     }
+                  
                     
                 }
                 .ant-form-item-control-input-content {
@@ -69,12 +73,19 @@
                             background-color: $primary-color-hover;
                         }
                     }
+                    a{
+                        color: $primary-color !important;
+                    }
                     a:hover {
-                        color: $primary-color;
+                        color: $primary-color-hover;
                     }
                 }
-                .login-form-forgot:hover {
+                .login-form-forgot {
                     color: $primary-color;
+                    cursor: pointer;
+                }
+                .login-form-forgot:hover {
+                    color: $primary-color-hover;
                 }
                 .ant-checkbox-wrapper-in-form-item {
                     & span:last-child {

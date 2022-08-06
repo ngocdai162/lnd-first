@@ -1,0 +1,13 @@
+.home {
+    &__test {
+     height: 300px;
+     width: 100%;
+     margin-bottom: 30px;
+     background-color: $background-content;
+     @include padding-app;
+     padding-top: 24px;
+     p{
+        color: rgb(204, 204, 204);
+     }
+    }
+}

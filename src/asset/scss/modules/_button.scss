@@ -2,9 +2,11 @@
     height: $height-module;
     padding: 0px 36px;
     @include text-18;
+    // background-color: $primary-color;
     background-color: $primary-color;
     border: none;
     border-radius: $radius-10;
+    color: $while-color;
     cursor: pointer;
     &:hover {
         background-color: $primary-color-hover;

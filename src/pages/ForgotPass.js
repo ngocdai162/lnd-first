@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
-export default function LoginPage() {
+export default function ForgotPass() {
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
       };
-    const [forgotFlag,setForgotFlag] = useState(0);
-    const handleForgot = () => {
-      setForgotFlag(1);
-    }
     return(
       <div className="p-login">
         <div className="p-login__block">
@@ -16,7 +12,7 @@ export default function LoginPage() {
           <img src="../../images/lnd-logo.png" alt=""/>
           </div>
           <div className="p-login__block__right">
-            <h1>Login</h1>
+            <h1>ForgotPass</h1>
         <Form
         name="normal_login"
         className="login-form"
@@ -36,26 +32,6 @@ export default function LoginPage() {
         >
           <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
         </Form.Item>
-
-        {
-          forgotFlag 
-          && 
-          <Form.Item
-          name="code"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your code!',
-            },
-          ]}
-        >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            placeholder="Code"
-          />
-        </Form.Item>
-        
-        }
         <Form.Item
           name="password"
           rules={[
@@ -71,33 +47,14 @@ export default function LoginPage() {
             placeholder="Password"
           />
         </Form.Item>
-        {
-          forgotFlag 
-          && 
-          <Form.Item
-          name="confirmPassword"
-          rules={[
-            {
-              required: true,
-              message: 'Please confirm password!',
-            },
-          ]}
-        >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            placeholder="Confirm password"
-          />
-        </Form.Item>
-        
-        }
         <Form.Item>
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
   
-          <span className="login-form-forgot" href="" onClick={handleForgot}>
+          <a className="login-form-forgot" href="">
             Forgot password
-          </span>
+          </a>
         </Form.Item>
   
         <Form.Item>

@@ -1,0 +1,223 @@
+.list-cryptos {
+    width: 100%;
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        &__item {
+            & p:first-child {
+                margin-left: 10px;
+            }
+            padding: $padding-block;
+            padding: {
+                top: $padding-block;
+                bottom: $padding-block;
+            }
+            width: 48%;
+            background-color: $background-content;
+            border-radius: 10px;;
+            p {
+                color: $text-color;
+                // color: $while-color;
+                color: $primary-color;
+            }
+            table {
+                padding-left: $padding-block;
+                width: 100%;
+                background-color: $background-content;
+                color: $text-color;
+                tr {
+                    
+                    th {
+                        padding-left: 10px;
+                        text-align: left;
+                    }
+                    td {
+                        padding-left: 10px;
+                        height: $height-module;
+                        text-align: left;
+                        span {
+                            cursor: pointer;
+                            color: $primary-color;
+                        }
+                    }
+                    .crypto-name {
+                        display: flex;
+                        align-items: center;
+                        // justify-content: center;
+                       
+                        span {
+                            margin-left: 10px;
+                            color: $while-color;
+                            
+                        }
+                    }
+                    &:hover {
+                        border-radius: 10px;
+                        background-color: $background-content-hover;
+                    }
+                }
+                .test {
+                   padding-left: 50px !important;
+                }
+            }
+        }
+    }
+    &__all {
+      border-radius: $radius-10;
+      margin-top: $padding-block;
+      background-color: $background-content ;
+
+      &__start {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding:  16px;
+        &__bar {
+            display: flex;
+            align-items: center;
+            p {
+                color: $primary-color;
+                margin: 0px;
+                margin-right: 16px;
+                padding: 10px;
+            }
+        }
+        &__search {
+            position: relative;
+            height: $height-module;
+            width: 60%;
+                input {
+                    padding : $padding-block;
+                    border: 0px;
+                    outline: none;
+                    height: 100%;
+                    width: 100%;
+                    color: $text-color;
+                    border-radius: 10px;;
+                    background-color: $background-content-hover;
+                }
+                button {
+                    position: absolute;
+                    cursor: pointer;
+                    border-radius: 0px;
+                    background-color: $primary-color;
+                    top: 0px;
+                    bottom: 0px;
+                    right: 0px;
+                    height: 100%;
+                    width: 100px;
+                    border-bottom-right-radius: 10px;
+                    border-top-right-radius: 10px;
+                    &:hover {
+                        background-color: $primary-color-hover;
+                    }
+                }
+        }
+        
+      }
+      .ant-table {
+        background-color: $background-content ;
+        color: $text-color;
+        border-collapse:  unset;
+        thead {
+        background-color: $background-content !important ;
+          
+            tr {
+                background-color: red !important;
+              
+                th {
+             
+                }
+                .ant-table-cell {
+                    color: $text-color;
+                    background-color: $background-content !important;
+                }
+            }
+        }
+        
+      }
+
+      .ant-pagination {
+            li {
+                border: none;
+                button {
+                    border: none;
+                    background-color: none !important;
+                }
+                a {
+                    color: $text-color;
+                }
+            }
+            .ant-pagination-prev .ant-pagination-item-link {
+                background-color: $background-content;
+            }
+            .ant-pagination-item-active {
+                background-color: red;
+                a {
+                    color: $while-color;
+                }
+            }
+            .ant-pagination-item  {
+                background-color: $background-content;
+            }
+            .ant-pagination-item-link {
+                background-color: $background-content;
+            }
+      }
+      // impotant
+      tr {
+        &:hover {
+         .ant-table-cell-row-hover {
+         background-color: $background-content-hover !important; 
+         }  
+        }
+        td {
+            width: 20%;
+        }
+        th {
+            width: 20%;
+            .ant-table-column-sorters {
+               justify-content: flex-start;
+               .ant-table-column-title {
+                flex: unset;
+               }
+            }
+        }
+      }
+      .ant-table-cell {
+        border-bottom: $block-border !important;
+        
+      }  
+      .ant-table-column-sort {
+        background-color: $background-content;
+      }
+      .first-column {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        p {
+            margin: 0px;
+            margin-left: 10px;
+            font-size: $text-size;
+            font-weight: $text-weight;
+            color: $while-color
+        }
+      }
+      .swap-action {
+        color: $primary-color;
+        font-size: $text-size;
+        font-weight: $text-weight;
+      }
+    
+    }
+}
+
+.favorite-star {
+    color: $primary-color;
+}
+
+.ant-dropdown-trigger {
+    right: 90px;
+    z-index: 2;
+}
