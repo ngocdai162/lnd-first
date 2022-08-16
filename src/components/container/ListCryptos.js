@@ -1,11 +1,8 @@
 // import { Table } from "antd";
 import React from "react";
+import {Link}  from "react-router-dom";
 import { useState, useEffect, useRef} from "react";
 import { Table } from "antd";
-import { StarOutlined} from '@ant-design/icons';
-import InputSearch from "../modules/InputSearch"
-import {Pagination} from "antd";
-import ButtonCustom from "../modules/ButtonCustom";
 import CryptoLogo from "../modules/modules__container/CryptoLogo";
 export default function ListCryptos() {
     const [totalPages,setTotalPages] = useState(0);
@@ -38,7 +35,9 @@ export default function ListCryptos() {
           dataIndex: "",
           key: 4,
           render: () => (
-            <span className="swap-action">Swap</span>
+            <span className="swap-action">
+              <Link to="/swap">Swap</Link>
+            </span>
           )
         },
         {
@@ -64,7 +63,7 @@ export default function ListCryptos() {
           )
         }
     ]
-
+    
     const dataApi = [
         {
           name: "Bitcoin",
@@ -96,6 +95,7 @@ export default function ListCryptos() {
           favorite: "true"
         }
     ]
+    console.log(dataApi.length)
     const [data,setData] =useState([]);
      const loadRecords = (dataIndex) => {
       console.log(dataIndex);
@@ -137,81 +137,77 @@ export default function ListCryptos() {
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = "../images/cryptoLogo/bitcoin-btc-logo.png"/>
-                            <span>Shiba</span>
+                           <CryptoLogo srcImg = {dataApi[0].srcImg}/>
+                            <span>{dataApi[0].name}</span>
                         </td>
-                        <td>100000000</td>
-                        <td>20000000000</td>
+                        <td>{dataApi[0].price}</td>
+                        <td>{dataApi[0].marketCap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = "../images/cryptoLogo/bitcoin-btc-logo.png"/>
-                            <span>Shiba</span>
+                           <CryptoLogo srcImg = {dataApi[1].srcImg}/>
+                            <span>{dataApi[1].name}</span>
                         </td>
-                        <td>1000</td>
-                        <td>20000</td>
+                        <td>{dataApi[1].price}</td>
+                        <td>{dataApi[1].marketCap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = "../images/cryptoLogo/bitcoin-btc-logo.png"/>
-                            <span>Shiba</span>
+                           <CryptoLogo srcImg = {dataApi[2].srcImg}/>
+                            <span>{dataApi[2].name}</span>
                         </td>
-                        <td>1000</td>
-                        <td>20000</td>
+                        <td>{dataApi[2].price}</td>
+                        <td>{dataApi[2].marketCap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
                     </tr>
-                   
-                   
-                    
-
                  </table>
                </div>
                <div className="list-cryptos__top__new list-cryptos__top__item">
-                 <p>Top hightlight crypto</p>
+                 <p>Top low crypto</p>
                  <table>
-                    <tr>
+                 <tr>
                         <th>Name</th>
                         <th>Price</th>
                         <th>Market cap</th>
                         <th></th>
                     </tr>
-                    <tr>
+                    <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = "../images/cryptoLogo/bitcoin-btc-logo.png"/>
-                            <span>Shiba</span>
+                           <CryptoLogo srcImg = {dataApi[0].srcImg}/>
+                            <span>{dataApi[dataApi.length - 1].name}</span>
                         </td>
-                        <td>1000</td>
-                        <td>20000</td>
+                        <td>{dataApi[dataApi.length - 1].price}</td>
+                        <td>{dataApi[dataApi.length - 1].marketCap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = "../images/cryptoLogo/bitcoin-btc-logo.png"/>
-                            <span>Shiba</span>
+                           <CryptoLogo srcImg = {dataApi[dataApi.length - 2].srcImg}/>
+                            <span>{dataApi[dataApi.length - 2].name}</span>
                         </td>
-                        <td>1000</td>
-                        <td>20000</td>
+                        <td>{dataApi[dataApi.length - 2].price}</td>
+                        <td>{dataApi[dataApi.length - 2].marketCap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = "../images/cryptoLogo/bitcoin-btc-logo.png"/>
-                            <span>Shiba</span>
+                           <CryptoLogo srcImg = {dataApi[dataApi.length - 3].srcImg}/>
+                            <span>{dataApi[dataApi.length - 3].name}</span>
                         </td>
-                        <td>1000</td>
-                        <td>20000</td>
+                        <td>{dataApi[dataApi.length - 3].price}</td>
+                        <td>{dataApi[dataApi.length - 3].marketCap}</td>
                         <td>
                           <span>Swap</span>
                         </td>

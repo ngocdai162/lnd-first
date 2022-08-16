@@ -1,13 +1,24 @@
 import React, { useState } from "react";
+import {Link} from "react-router-dom";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
+import { setIsUser } from "../redux/slice/isUserSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom'; //chuyển hương trang
+
 export default function LoginPage() {
+  const navigate = useNavigate();
+    const dispatch = useDispatch();
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
+        navigate('/listCryptos');   
+        dispatch(setIsUser(true));
       };
     const [forgotFlag,setForgotFlag] = useState(0);
     const handleForgot = () => {
       setForgotFlag(1);
+    }
+    const handleLogin = () => {
     }
     return(
       <div className="p-login">
@@ -101,10 +112,11 @@ export default function LoginPage() {
         </Form.Item>
   
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
-          </Button>
-          Or <a href="">register now!</a>
+            <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleLogin}>
+              Log in
+             </Button>
+          
+          Or <Link to="/register">register now!</Link>
         </Form.Item>
       </Form>
           </div>

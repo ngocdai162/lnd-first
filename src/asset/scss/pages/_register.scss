@@ -106,28 +106,26 @@
                         }
                     }
                     .upload-avt {
-                        .ant-upload {
-                            background: none;
-                            & :hover {
-                                button {
-                                    color: $primary-color;
-                                    span {
-                                        svg {
-
-                                            color: $primary-color;
-                                        }
-
-                                    }
-                                }
-                            }
-                            button {
-                                background-color: transparent;
-                                color: $while-color;
-                                border: none;
-                            }
+                        & div:first-child {
+                            display: flex;
+                            justify-content: space-between;
                         }
-                      
+                        label {
+                            color: $while-color !important;
+                            padding: 0 30px !important;
+                        }
                     }
+                }
+                &__form-avatar {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    p {
+                       @include primary-text;
+                       color: $while-color !important;
+                       margin-bottom: 10px !important;
+                    }
+                    
                 }
             }
          

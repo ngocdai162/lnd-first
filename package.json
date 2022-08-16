@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.4",
     "@web3-react/core": "^6.1.9",
     "antd": "^4.21.3",
     "axios": "^0.27.2",
@@ -10,6 +11,7 @@
     "ethers": "^5.6.6",
     "font-awesome": "^4.7.0",
     "react": "^18.1.0",
+    "react-avatar-edit": "^1.2.0",
     "react-countdown": "^2.3.2",
     "react-dom": "^18.1.0",
     "react-notifications-component": "^4.0.0",
@@ -19,6 +21,7 @@
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
     "sass": "^1.51.0",
+    "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

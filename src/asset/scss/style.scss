@@ -2,8 +2,11 @@
 @import './modules/all';
 @import './pages/all';
 @import './common/all';
-@import './container/all'
-
+@import './container/all';
+.konvajs-content {
+    position: absolute !important;
+    left: 0px;
+}
 // .test {
 //     width: 100%;
 //     height: 100vh;

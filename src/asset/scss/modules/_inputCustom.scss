@@ -9,5 +9,8 @@
         border: $block-border;
         outline: none;
         padding: 0px 8px;
+        &:focus {
+            background-color: rgb(2, 2, 2);
+        }
     }
 }

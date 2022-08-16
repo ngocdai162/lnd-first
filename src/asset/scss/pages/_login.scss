@@ -60,19 +60,24 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: flex-end;
-                    
-                    .login-form-button {
-                        margin-right: 50px;
-                        height: $height-module;
-                        background-color: $primary-color;
-                        width: 50%;
-                        cursor: pointer;
-                        border-radius: 10px;
-                        border: none;
-                        &:hover {
-                            background-color: $primary-color-hover;
+                        .login-form-button {
+                            height: $height-module;
+                            padding: 0px 36px;
+                            @include text-18;
+                            background-color: $primary-color;
+                            border: none;
+                            border-radius: $radius-10;
+                            color: $while-color;
+                            cursor: pointer;
+                            &:hover {
+                               background-color: $primary-color-hover;
+                            }
+                            a {
+                                width: 100% !important;
+                                height: 100%;
+                            }
                         }
-                    }
+                    
                     a{
                         color: $primary-color !important;
                     }

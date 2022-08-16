@@ -5,7 +5,8 @@ import App from './App';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
-import store from './store';
+// import store from './store';
+import store from './redux/store'
 import { Web3ReactProvider } from "@web3-react/core";
 //import { ethers } from "ethers";
 import { Web3Provider } from "@ethersproject/providers";

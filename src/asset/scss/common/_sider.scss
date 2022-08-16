@@ -65,4 +65,49 @@
             }
         }
     }
+    &  .buy-coin {
+        position: absolute;
+        bottom: 30px;
+        display: flex;
+        justify-content: center;
+        padding-left: $padding-block;
+    }
+    
+}
+.ant-modal {
+       width: 50% !important;
+        
+}
+.ant-modal-body {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    .wallet-item {
+        width: 40%;
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        &__title {
+            position: relative;
+            display: flex;
+            align-items: center;
+            p {
+                margin: {
+                   left: 10px;
+                   bottom: 0px;
+                }
+            }
+            span {
+                position: absolute;
+                right: 0px;
+            }
+        }
+    }
+    svg {
+      width: 90px !important;
+      font-size: 50px;;
+    }
+  
+    
 }

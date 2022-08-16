@@ -8,6 +8,11 @@ const Wallet = () => {
     "Bitcoin",
     "LND"
    ]
+   const cryptoInfo = {
+     name: "",
+     price: "",
+     srcImg: ""
+   }
     return (
         <div className="p-wallet">
           <div className="wallet">
