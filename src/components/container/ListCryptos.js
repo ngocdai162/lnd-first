@@ -4,7 +4,13 @@ import {Link}  from "react-router-dom";
 import { useState, useEffect, useRef} from "react";
 import { Table } from "antd";
 import CryptoLogo from "../modules/modules__container/CryptoLogo";
+import { useDispatch, useSelector } from "react-redux";
+import { listCryptoSelector } from "../../redux/selectors";
+import { fetchListCrypto } from "../../redux/slice/listCryptoSlice";
 export default function ListCryptos() {
+    const dispatch = useDispatch()
+    const  dataApi  = useSelector(listCryptoSelector) ;
+    console.log(dataApi)
     const [totalPages,setTotalPages] = useState(0);
     const moreItems = ["Edit","Infomation","Analytics","Whilelist","Remaining","Allocation"];
     const columns = [
@@ -13,16 +19,16 @@ export default function ListCryptos() {
           key: 1,
           render: (payload) => (
             <div className="first-column">
-              <CryptoLogo srcImg={payload.imgSrc}/>
+              <CryptoLogo srcImg={payload.image}/>
               <p>{payload.name}</p>
             </div>
           )
         },
         {
           title: "Price",
-          dataIndex: "price",
+          dataIndex: "current_price",
           key: 2,
-          sorter: (a, b) => a.price - b.price
+          sorter: (a, b) => a.current_price - b.current_price
         },
         {
           title: "Market cap",
@@ -64,38 +70,16 @@ export default function ListCryptos() {
         }
     ]
     
-    const dataApi = [
-        {
-          name: "Bitcoin",
-          imgSrc: "../images/cryptoLogo/bitcoin-btc-logo.png",
-          price:"1000",
-          marketCap: "10,000,000",
-          favorite: "true",
-        },
-        {
-          name: "Terra",
-          imgSrc: "../images/cryptoLogo/terra-luna-luna-logo.png",
-          price:"2000",
-          marketCap: "10,000,000",
-          favorite: "true"
-        },
-        {
-          name: "Solana",
-          imgSrc: "../images/cryptoLogo/solana-sol-logo.png",
-          price:"1500",
-          marketCap: "10,000,000",
-          favorite: "false"
-
-        },
-        {
-          name: "Shiba",
-          imgSrc: "../images/cryptoLogo/shiba-inu-shib-logo.png",
-          price:"4000",
-          marketCap: "10,000,000",
-          favorite: "true"
-        }
-    ]
-    console.log(dataApi.length)
+    // const dataApi = [
+    //     {
+    //       name: "Bitcoin",
+    //       imgSrc: "../images/cryptoLogo/bitcoin-btc-logo.png",
+    //       price:"1000",
+    //       marketCap: "10,000,000",
+    //       favorite: "true",
+    //     }
+    // ]
+    // console.log(dataApi.length)
     const [data,setData] =useState([]);
      const loadRecords = (dataIndex) => {
       console.log(dataIndex);
@@ -137,18 +121,18 @@ export default function ListCryptos() {
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = {dataApi[0].srcImg}/>
+                           <CryptoLogo srcImg = {dataApi[0].image}/>
                             <span>{dataApi[0].name}</span>
                         </td>
-                        <td>{dataApi[0].price}</td>
-                        <td>{dataApi[0].marketCap}</td>
+                        <td>{dataApi[0].current_price}</td>
+                        <td>{dataApi[0].market_cap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = {dataApi[1].srcImg}/>
+                           <CryptoLogo srcImg = {dataApi[1].imgSrc}/>
                             <span>{dataApi[1].name}</span>
                         </td>
                         <td>{dataApi[1].price}</td>
@@ -159,11 +143,11 @@ export default function ListCryptos() {
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = {dataApi[2].srcImg}/>
+                           <CryptoLogo srcImg = {dataApi[2].imgSrc}/>
                             <span>{dataApi[2].name}</span>
                         </td>
-                        <td>{dataApi[2].price}</td>
-                        <td>{dataApi[2].marketCap}</td>
+                        <td>{dataApi[2].current_price}</td>
+                        <td>{dataApi[2].mmarket_cap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
@@ -181,33 +165,33 @@ export default function ListCryptos() {
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = {dataApi[0].srcImg}/>
+                           <CryptoLogo srcImg = {dataApi[0].image}/>
                             <span>{dataApi[dataApi.length - 1].name}</span>
                         </td>
-                        <td>{dataApi[dataApi.length - 1].price}</td>
-                        <td>{dataApi[dataApi.length - 1].marketCap}</td>
+                        <td>{dataApi[dataApi.length - 1].current_price}</td>
+                        <td>{dataApi[dataApi.length - 1].market_cap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = {dataApi[dataApi.length - 2].srcImg}/>
+                           <CryptoLogo srcImg = {dataApi[dataApi.length - 2].image}/>
                             <span>{dataApi[dataApi.length - 2].name}</span>
                         </td>
-                        <td>{dataApi[dataApi.length - 2].price}</td>
-                        <td>{dataApi[dataApi.length - 2].marketCap}</td>
+                        <td>{dataApi[dataApi.length - 2].current_price}</td>
+                        <td>{dataApi[dataApi.length - 2].market_cap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = {dataApi[dataApi.length - 3].srcImg}/>
+                           <CryptoLogo srcImg = {dataApi[dataApi.length - 3].image}/>
                             <span>{dataApi[dataApi.length - 3].name}</span>
                         </td>
-                        <td>{dataApi[dataApi.length - 3].price}</td>
-                        <td>{dataApi[dataApi.length - 3].marketCap}</td>
+                        <td>{dataApi[dataApi.length - 3].current_price}</td>
+                        <td>{dataApi[dataApi.length - 3].market_cap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
@@ -230,7 +214,7 @@ export default function ListCryptos() {
                  columns={columns}
                  dataSource={data}
                  pagination={{
-                 pageSize: 2,
+                 pageSize: 10,
                  total:  totalPages,
                  onChange: (totalPages) => {
                   loadRecords(totalPages);

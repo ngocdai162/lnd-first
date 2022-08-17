@@ -97,6 +97,9 @@
                                   bottom: 0.5px solid $while-color;
                                 }
                             }
+                            span {
+                                color: $primary-color;
+                            }
                         }
                     }
                     &__btn {
@@ -124,6 +127,9 @@
                        @include primary-text;
                        color: $while-color !important;
                        margin-bottom: 10px !important;
+                    }
+                    span {
+                        color: $primary-color;
                     }
                     
                 }

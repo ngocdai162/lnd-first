@@ -13,7 +13,7 @@ export default function LoginPage() {
         console.log('Received values of form: ', values);
         navigate('/listCryptos');   
         dispatch(setIsUser(true));
-      };
+    };
     const [forgotFlag,setForgotFlag] = useState(0);
     const handleForgot = () => {
       setForgotFlag(1);

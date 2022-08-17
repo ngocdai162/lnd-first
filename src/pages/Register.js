@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {Tabs , Button, message, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom'; //chuyển hương trang
 export default function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const [saveFlag,setSaveFlag] = useState(false);
     const [name,setName] = useState(false);
     const [mail,setMail] = useState(false);
@@ -23,6 +22,18 @@ export default function Register() {
     const [pass,setPass] = useState(false);
     const [passConfirm,setPassConfirm] = useState(false);
     const [passFlag,setPassFlag] = useState(false);
+    const nameInputFail = useRef();
+    const avatarInputFail= useRef();
+    const mailInputFail = useRef();
+    const passInputFail = useRef();
+    const passConfirmInputFail = useRef();
+    const validateEmail = (email) => {
+      var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if (email.match(validRegex)) {
+         return true;
+      }
+      return false;
+    }
     const nameOnChange = (e) => {
       setName(e.target.value);
       console.log(name);
@@ -103,7 +114,32 @@ export default function Register() {
     },
    };
    const handleSave = () => {
-     if(name && mail && avatar && passFlag) {
+     if(name =='') {
+       nameInputFail.current.classList.remove('none');
+     } else {
+      nameInputFail.current.classList.add('none');
+     }
+     if((mail =='') || (validateEmail(mail) == false)) {
+        mailInputFail.current.classList.remove('none');
+    } else {
+      mailInputFail.current.classList.add('none');
+     }
+    if(avatar !=false) {
+      avatarInputFail.current.classList.remove('none');
+    } else {
+      avatarInputFail.current.classList.add('none');
+     }
+    if(pass =='') {
+      passInputFail.current.classList.remove('none');
+    } else {
+      passInputFail.current.classList.add('none');
+     }
+    if((passConfirm =='') || (passConfirm != pass)){
+      passConfirmInputFail.current.classList.remove('none');
+    } else {
+      passConfirmInputFail.current.classList.add('none');
+     }
+    if(name && mail && avatar && passFlag) {
       console.log("ok roi nay");
       navigate('/listCryptos');   
      dispatch(setIsUser(true));
@@ -127,10 +163,12 @@ export default function Register() {
                         <div className="p-register__block__right__tabs__form__content__item">
                           <p>Name</p>
                           <input onChange={nameOnChange}/>
+                          <span class="none" ref={nameInputFail}>Please input your username!</span>
                         </div>
                         <div className="p-register__block__right__tabs__form__content__item">
                           <p>Mail</p>
                           <input onChange={mailOnChange}/>
+                          <span class="none" ref={mailInputFail}>Please input your email!</span>
                         </div>
                      </div>
                    </div>
@@ -141,6 +179,7 @@ export default function Register() {
                      <div className="p-register__block__right__tabs__form__content upload-avt">
                        <UploadImage width="150" event = {getAvt}/>
                      </div>
+                     <span class="" ref={avatarInputFail}>Please upload image!</span>
                    </div>
                 </TabPane>
                 <TabPane tab="" key="3">
@@ -149,10 +188,12 @@ export default function Register() {
                         <div className="p-register__block__right__tabs__form__content__item">
                           <p>Password</p>
                           <input onChange={passOnchange} type="password"/>
+                          <span class="none" ref={passInputFail}>Please input your password!</span>
                         </div>
                         <div className="p-register__block__right__tabs__form__content__item">
                           <p>Confirm Password</p>
                           <input onChange={passConfirmOnchange} type="password"/>
+                          <span class="none" ref={passConfirmInputFail}>Please confirm password!</span>
                         </div>
                      </div>
                    </div>

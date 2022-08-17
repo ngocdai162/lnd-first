@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './asset/scss/style.scss';
 import 'antd/dist/antd.css';
@@ -17,11 +17,20 @@ import Swap from './components/container/Swap';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { isUserSelector } from './redux/selectors';
 import { setIsUser } from './redux/slice/isUserSlice';
-
 import Wallet from './pages/Wallet';
+// import { fetchListCrypto } from './redux/slice/listCryptoSlices';
+import {  fetchListCrypto } from './redux/slice/listCryptoSlice';
+// import {fetchListCrypto} from './redux/slice/listCryptoSlice'
+//Api Coin
+//https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false
 
 function App() {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchListCrypto())
+  },[])
+  const dataApio = useSelector((state) => state.listCrypto.data);
+  console.log(dataApio);
   window.addEventListener('load', (event) => {
      dispatch(setIsUser(false));
   });
@@ -29,7 +38,6 @@ function App() {
     // const user = useSelector(state => state.user);
     return (
      <Router>
-
         <Routes>
            <Route path="" element={<FirstPage/>} />
            {!isUser && <Route path="/login" element={<LoginPage/>}/>}
@@ -53,10 +61,10 @@ function App() {
             </div>
           </div>
         }
-        
      </Router>
         
     )
 }
+
 
 export default App;

@@ -6,8 +6,6 @@ const isUserSlice = createSlice({
     },
     reducers: {
         setIsUser (state,action) {
-            console.log("ne ")
-            console.log(action.payload);
             state.isUserFlag = action.payload;
         }
     }
