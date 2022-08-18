@@ -7,5 +7,33 @@
 .w-2 {
     width: calc(100% / 2);
 }
+.primary-btn {
+    height: $height-module;
+    padding: 0px 36px;
+    @include text-18;
+    // background-color: $primary-color;
+    background-color: $primary-color;
+    border: none;
+    border-radius: $radius-10;
+    color: $while-color;
+    cursor: pointer;
+    &:hover {
+        background-color: $primary-color-hover;
+    }
+}
+.primary-input {
+    @include primary-text;
+    color: #fff !important;
+    width: 100%;
+    height: $height-module;
+    border-radius: $radius-10;
+    border: $block-border;
+    outline: none;
+    padding: 0px 8px;
+    background-color:  $app-color;
+    &:focus {
+        background-color: rgb(2, 2, 2);
+    }
+}
 
 

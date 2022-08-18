@@ -4,7 +4,7 @@ const userSlice = createSlice({
     initialState: {
         //thong tin user
         id:null,
-        name:"",
+        name:"Test",
         password:"",
         email:"",
         avt:""

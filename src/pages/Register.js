@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {Tabs , Button, message, Upload } from 'antd';
+import Avatar from 'react-avatar-edit';
 import { UploadOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from "react-router-dom";
@@ -15,6 +16,7 @@ import { useNavigate } from 'react-router-dom'; //chuyển hương trang
 export default function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [newUser,setNewUser] = useState({});
     const [saveFlag,setSaveFlag] = useState(false);
     const [name,setName] = useState(false);
     const [mail,setMail] = useState(false);
@@ -27,6 +29,15 @@ export default function Register() {
     const mailInputFail = useRef();
     const passInputFail = useRef();
     const passConfirmInputFail = useRef();
+    // const validateName = (name) => {
+    //   // var validNameRegex =  /^[a-zA-Z\-]+$/
+    //   var validNameRegex =  /$/
+
+    //   if(name.match(validNameRegex)) {
+    //     return true
+    //   }
+    //   return false;
+    // }
     const validateEmail = (email) => {
       var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       if (email.match(validRegex)) {
@@ -34,6 +45,7 @@ export default function Register() {
       }
       return false;
     }
+
     const nameOnChange = (e) => {
       setName(e.target.value);
       console.log(name);
@@ -113,41 +125,73 @@ export default function Register() {
       }
     },
    };
+
+   //xử lý lấy ảnh
+   const [src,setSrc] = useState(null);
+    const [preview, setPreview] = useState(null);
+    const onClose = () => {
+        setPreview(null);
+    }
+    const onCrop =  view => {
+        setPreview(view);
+    }
+    useEffect(()=> {
+      setAvatar(preview);
+    },preview)
+
+   const [nameError,setNameError] = useState("");
    const handleSave = () => {
-     if(name =='') {
+     if(name =='')  {
+       setNameError('Required');
        nameInputFail.current.classList.remove('none');
-     } else {
-      nameInputFail.current.classList.add('none');
+     } 
+     else if(name.length < 4) {
+          setNameError('Must be 4 character or more');
+          nameInputFail.current.classList.remove('none');
      }
+
      if((mail =='') || (validateEmail(mail) == false)) {
         mailInputFail.current.classList.remove('none');
     } else {
       mailInputFail.current.classList.add('none');
      }
+
     if(avatar !=false) {
       avatarInputFail.current.classList.remove('none');
     } else {
       avatarInputFail.current.classList.add('none');
      }
-    if(pass =='') {
+
+    if(pass =='' || pass.length<6) {
       passInputFail.current.classList.remove('none');
     } else {
       passInputFail.current.classList.add('none');
      }
+
     if((passConfirm =='') || (passConfirm != pass)){
       passConfirmInputFail.current.classList.remove('none');
     } else {
       passConfirmInputFail.current.classList.add('none');
      }
+
     if(name && mail && avatar && passFlag) {
       console.log("ok roi nay");
+      setNewUser({
+        id: uuidv4(),
+        name: name,
+        mail: mail,
+        avatar: avatar,
+        pass: pass
+     })
+      // dispatch(.....(newUser)) dispatch create 
       navigate('/listCryptos');   
-     dispatch(setIsUser(true));
+       dispatch(setIsUser(true));
      }
    }
-
-  
    
+   //NEW User dispatch create
+   
+   console.log(newUser);
     return(
       <div className="p-register">
         <div className="p-register__block">
@@ -163,7 +207,7 @@ export default function Register() {
                         <div className="p-register__block__right__tabs__form__content__item">
                           <p>Name</p>
                           <input onChange={nameOnChange}/>
-                          <span class="none" ref={nameInputFail}>Please input your username!</span>
+                          <span class="none" ref={nameInputFail}>{nameError}</span>
                         </div>
                         <div className="p-register__block__right__tabs__form__content__item">
                           <p>Mail</p>
@@ -177,7 +221,17 @@ export default function Register() {
                    <div className="p-register__block__right__tabs__form p-register__block__right__tabs__form-avatar ">
                      <p>Upload avatar</p>
                      <div className="p-register__block__right__tabs__form__content upload-avt">
-                       <UploadImage width="150" event = {getAvt}/>
+                     <Avatar
+                        width={200}
+                        height= {200}
+                        onCrop={onCrop}
+                        onClose = {onClose}
+                        src={src}
+                        />
+                     {preview && <img src={preview} style={{
+                        width: `200px`,
+                        height: `200px`
+                     }}/>}
                      </div>
                      <span class="" ref={avatarInputFail}>Please upload image!</span>
                    </div>
@@ -188,7 +242,7 @@ export default function Register() {
                         <div className="p-register__block__right__tabs__form__content__item">
                           <p>Password</p>
                           <input onChange={passOnchange} type="password"/>
-                          <span class="none" ref={passInputFail}>Please input your password!</span>
+                          <span class="none" ref={passInputFail}>Must be 6 character or more</span>
                         </div>
                         <div className="p-register__block__right__tabs__form__content__item">
                           <p>Confirm Password</p>

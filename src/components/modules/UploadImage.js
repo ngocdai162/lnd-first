@@ -10,9 +10,9 @@ const UploadImage = (props) => {
     const onCrop =  view => {
         setPreview(view);
     }
-    useEffect(()=> {
-        props.event(preview);
-    },preview)
+    // useEffect(()=> {
+    //     props.event(preview);
+    // },preview)
     return (
         <div className='upload-image'>
             <Avatar
