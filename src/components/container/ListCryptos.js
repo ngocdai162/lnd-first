@@ -10,7 +10,8 @@ import { fetchListCrypto } from "../../redux/slice/listCryptoSlice";
 export default function ListCryptos() {
     const dispatch = useDispatch()
     const  dataApi  = useSelector(listCryptoSelector) ;
-    console.log(dataApi)
+    // console.log(dataApi)
+    console.log(dataApi[0].current_price)
     const [totalPages,setTotalPages] = useState(0);
     const moreItems = ["Edit","Infomation","Analytics","Whilelist","Remaining","Allocation"];
     const columns = [
@@ -32,14 +33,20 @@ export default function ListCryptos() {
         },
         {
           title: "Market cap",
-          dataIndex: "marketCap",
+          dataIndex: "market_cap",
           key: 3,
-          sorter: (a, b) => a.price - b.price
+          sorter: (a, b) => a.market_cap - b.market_cap
+        },
+        {
+          title: "24h Change",
+          dataIndex: "price_change_percentage_24h",
+          key: 4,
+          sorter: (a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h
         },
         {
           title: "Action",
           dataIndex: "",
-          key: 4,
+          key: 5,
           render: () => (
             <span className="swap-action">
               <Link to="/swap">Swap</Link>
@@ -49,7 +56,7 @@ export default function ListCryptos() {
         {
           title: "Favorites",
           dataIndex: "favorite",
-          key: 5,
+          key: 6,
           filters: [
             {
               text: 'Favorite',
@@ -70,16 +77,6 @@ export default function ListCryptos() {
         }
     ]
     
-    // const dataApi = [
-    //     {
-    //       name: "Bitcoin",
-    //       imgSrc: "../images/cryptoLogo/bitcoin-btc-logo.png",
-    //       price:"1000",
-    //       marketCap: "10,000,000",
-    //       favorite: "true",
-    //     }
-    // ]
-    // console.log(dataApi.length)
     const [data,setData] =useState([]);
      const loadRecords = (dataIndex) => {
       console.log(dataIndex);
@@ -87,7 +84,7 @@ export default function ListCryptos() {
     }
     useEffect(()=>{
       loadRecords(0)
-    },[])
+    },[dataApi])
 
     const [dataSearch,setDataSearch] = useState();
     const handleChange = (e) => {
@@ -132,22 +129,22 @@ export default function ListCryptos() {
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = {dataApi[1].imgSrc}/>
+                           <CryptoLogo srcImg = {dataApi[1].image}/>
                             <span>{dataApi[1].name}</span>
                         </td>
-                        <td>{dataApi[1].price}</td>
-                        <td>{dataApi[1].marketCap}</td>
+                        <td>{dataApi[1].current_price}</td>
+                        <td>{dataApi[1].market_cap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = {dataApi[2].imgSrc}/>
+                           <CryptoLogo srcImg = {dataApi[2].image}/>
                             <span>{dataApi[2].name}</span>
                         </td>
                         <td>{dataApi[2].current_price}</td>
-                        <td>{dataApi[2].mmarket_cap}</td>
+                        <td>{dataApi[2].market_cap}</td>
                         <td>
                           <span>Swap</span>
                         </td>
@@ -165,7 +162,7 @@ export default function ListCryptos() {
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
-                           <CryptoLogo srcImg = {dataApi[0].image}/>
+                           <CryptoLogo srcImg = {dataApi[dataApi.length - 1].image}/>
                             <span>{dataApi[dataApi.length - 1].name}</span>
                         </td>
                         <td>{dataApi[dataApi.length - 1].current_price}</td>

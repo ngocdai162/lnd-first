@@ -26,11 +26,15 @@ import {  fetchListCrypto } from './redux/slice/listCryptoSlice';
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
+  setInterval(()=> {
     dispatch(fetchListCrypto())
-  },[])
-  const dataApio = useSelector((state) => state.listCrypto.data);
-  console.log(dataApio);
+  },1000)
+  
+  // useEffect(() => {
+  //   dispatch(fetchListCrypto())
+  // },[])
+ 
+
   window.addEventListener('load', (event) => {
      dispatch(setIsUser(false));
   });
