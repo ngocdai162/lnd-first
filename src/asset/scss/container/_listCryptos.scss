@@ -204,13 +204,13 @@
             color: $while-color
         }
       }
-      .swap-action {
-        a {
+      .swap-action {   
             color: $primary-color;
             font-size: $text-size;
-            font-weight: $text-weight;
-        }
-      
+            font-weight: $text-weight;  
+            &:hover {
+                cursor: pointer;
+            }   
       }
     
     }

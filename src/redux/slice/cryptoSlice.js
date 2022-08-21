@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const cryptoSlice = createSlice({
     name: "cryptoSlice",
     initialState : {
+        id:"",
         name : "",
         price: "",
         marketCap: "",

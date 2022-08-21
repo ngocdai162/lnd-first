@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal } from 'antd';
 import { MinusOutlined, ArrowRightOutlined, AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
@@ -6,7 +6,15 @@ import ButtonCustom from '../modules/ButtonCustom';
 import CryptoLogo from '../modules/modules__container/CryptoLogo';
 import InputItem from '../modules/InputCustom';
 import InputCustom from '../modules/InputCustom';
+import { usdSelector ,lndSelector } from '../../redux/selectors';
+import { useSelector } from 'react-redux';
+
 export default function Sider() {
+  const [valueConvert,setValueConvert] = useState(0);
+  const [valueResult,setValueResult] = useState(0);
+  const [errorValue,setErrorValue] = useState(false);
+  const usd= useSelector(usdSelector);
+  const lnd = useSelector(lndSelector);
     function getItem(label, key, icon, children, type) {
         return {
           key,
@@ -50,19 +58,29 @@ export default function Sider() {
   
   //Modal
   const [isModalVisible, setIsModalVisible] = useState(false);
-
   const showModal = () => {
     setIsModalVisible(true);
   };
-
   const handleOk = () => {
     setIsModalVisible(false);
   };
-
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
+   
+  //Xử lý convert to lnd
+  const handleChangeConvert = (e) => {
+    setValueConvert(e.target.value);
+  }
+  useEffect(()=>{
+   if(isNaN(valueConvert) || (valueConvert > usd.amount) ) {
+    setErrorValue(true);
+   } else {
+    setValueResult(valueConvert/lnd.price);
+    setErrorValue(false);
+   }
+  },[valueConvert])
+  
     return (
         <div className="sider">
              <div className='sider__title'>
@@ -83,28 +101,28 @@ export default function Sider() {
             <div className='buy-coin'>
               <ButtonCustom text="Buy LND-COIN" event={showModal}/>
             </div>
-            <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Convert to LND-COIN" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
               <div className='wallet-item'>
                 <div className='wallet-item__title wallet-usd__title'>
                   <CryptoLogo srcImg='../images/cryptoLogo/bitcoin-btc-logo.png'/>
                   <p>USD</p>
-                  <span>Exits: 20$</span>
+                  <span>Exits: {usd.amount}</span>
                 </div>
-                <p></p>
-                <InputCustom placeholder="Convert to LND-COIN"/>
+                <div className="wallet-item__input">
+                  <InputCustom placeholder="Convert to LND-COIN" event={handleChangeConvert}/>
+                  {errorValue &&  <span className='invalid'>Invalid</span>}
+                </div>
               </div>
               <ArrowRightOutlined width="90" />
               <div className='wallet-item'>
                 <div className='wallet-item__title wallet-lnd__title'>
                   <CryptoLogo srcImg='../images/lnd-logo.png'/>
-                  <p>LND</p>
-                  <span>Exits: 30 LND</span>
+                  <p>LND</p> 
+                  <p>Price: {lnd.price}USD</p>
+                  <span>Exits: {lnd.amount}</span>
                 </div>
-                <p>Result : 60 LND</p>
-            
-            
+                <p className='result'>Result : {valueResult} LND</p>
               </div>
-
             </Modal>
         </div>
     )

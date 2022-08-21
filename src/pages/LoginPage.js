@@ -10,7 +10,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
     const dispatch = useDispatch();
     const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
         navigate('/listCryptos');   
         dispatch(setIsUser(true));
     };

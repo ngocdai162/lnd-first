@@ -45,6 +45,7 @@ function App() {
         <Routes>
            <Route path="" element={<FirstPage/>} />
            {!isUser && <Route path="/login" element={<LoginPage/>}/>}
+           
            <Route path="/register"element = {<Register/>}/>
            <Route path="/wallet"element = {<Wallet/>}/>
         </Routes> 

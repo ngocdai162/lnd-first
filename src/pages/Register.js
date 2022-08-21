@@ -189,8 +189,6 @@ export default function Register() {
      }
    }
    
-   //NEW User dispatch create
-   
    console.log(newUser);
     return(
       <div className="p-register">

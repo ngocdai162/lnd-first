@@ -1,17 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import ButtonCustom from "../components/modules/ButtonCustom";
 import CryptoLogo from "../components/modules/modules__container/CryptoLogo";
 import SelectCustom from "../components/modules/SelectCustom";
+import { walletSelector } from "../redux/selectors";
 const Wallet = () => {
-   const listItem=[
-    "Shiba",
-    "Bitcoin",
-    "LND"
-   ]
-   const cryptoInfo = {
-     name: "",
-     price: "",
-     srcImg: ""
+   const listItem = useSelector(walletSelector);
+   const [activeCoin,setActiveCoin] = useState(1)
+   const getKey = (activeKey) => {
+    setActiveCoin(activeKey-1)
+    return activeKey;
    }
     return (
         <div className="p-wallet">
@@ -31,14 +29,14 @@ const Wallet = () => {
             <div className="wallet__container">
                <div className="wallet__container__content">
                   <div className="wallet__container__content__select">
-                    <SelectCustom listItem = {listItem} defaultValue= "Select Coin" placeholderSelect = "Select Coin"/>
+                    <SelectCustom listItem = {listItem} event={getKey} defaultValue= "Select Coin" placeholderSelect = "Select Coin"/>
                   </div>
                   <div  className="wallet__container__content__logo">
                     <img src="../images/cryptoLogo/shiba-inu-shib-logo.png"/>
                   </div>
-                  <h1>LND-Coin</h1>
-                  <p>1000</p>
-                  <span>$0.9</span>
+                  <h1>{listItem[activeCoin].coin}</h1>
+                  <p>{listItem[activeCoin].amount}</p>
+                  <span>{listItem[activeCoin].price}</span>
                </div>
                <div className="wallet__container__button">
                 <ButtonCustom text="Buy"/>

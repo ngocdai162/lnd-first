@@ -76,18 +76,49 @@
 }
 .ant-modal {
        width: 50% !important;
-        
+       .ant-btn {
+        background-color: $primary-color !important;
+        // padding: 36px 0px !important;
+        border-radius: 10px !important;
+        color: $while-color !important;
+        height: $height-module !important;
+        // padding: 0px 36px;
+        @include text-18;
+        border: none !important;
+        cursor: pointer;
+        &:hover {
+            background-color: $primary-color-hover !important;
+        }
+    }
+    &-content {
+        background-color: #726127 !important;
+       p {
+        color: $while-color !important;
+       }
+       span {
+        color: $while-color !important;
+       }
+    }
 }
+
 .ant-modal-body {
     display: flex !important;
     align-items: center;
     justify-content: space-between;
     .wallet-item {
         width: 40%;
-        height: 100px;
+        height: 150px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        .invalid {
+            font-size: 14px;
+            color: $primary-color !important;
+            margin-top: 20px;
+        }
+        .result {
+            margin-bottom: 60px;
+        }
         &__title {
             position: relative;
             display: flex;
@@ -102,12 +133,29 @@
                 position: absolute;
                 right: 0px;
             }
+           
         }
+        &__input {
+            display: flex;
+            width: 100%;
+            height: 100px;
+            justify-content: flex-start;
+            flex-direction: column;
+            input {
+           
+                margin-top : 10px;
+                background-color: #fff;;
+                &:hover {
+                    background-color: #fff;
+                }
+            }
+        }
+       
     }
     svg {
       width: 90px !important;
-      font-size: 50px;;
+      font-size: 50px;
+      color: $primary-color !important;
     }
-  
     
 }

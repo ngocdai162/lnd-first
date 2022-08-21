@@ -1,19 +1,29 @@
 // import { Table } from "antd";
 import React from "react";
-import {Link}  from "react-router-dom";
+import {Link, useNavigate}  from "react-router-dom";
 import { useState, useEffect, useRef} from "react";
 import { Table } from "antd";
 import CryptoLogo from "../modules/modules__container/CryptoLogo";
 import { useDispatch, useSelector } from "react-redux";
 import { listCryptoSelector } from "../../redux/selectors";
 import { fetchListCrypto } from "../../redux/slice/listCryptoSlice";
+import { swapToLND } from "../../redux/slice/coinSwapSlice";
 export default function ListCryptos() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const  dataApi  = useSelector(listCryptoSelector) ;
-    // console.log(dataApi)
-    console.log(dataApi[0].current_price)
     const [totalPages,setTotalPages] = useState(0);
     const moreItems = ["Edit","Infomation","Analytics","Whilelist","Remaining","Allocation"];
+    const handleClickSwap = (e) => {
+      if(e.target.querySelector('input')!=null) {
+        let coinSwap = dataApi.find((item)=> {
+          return item.id == e.target.querySelector('input').value;
+        })
+        console.log(coinSwap)
+        dispatch(swapToLND(coinSwap));
+        navigate('/swap');
+      }
+    }
     const columns = [
         {
           title: "Name",
@@ -47,10 +57,14 @@ export default function ListCryptos() {
           title: "Action",
           dataIndex: "",
           key: 5,
-          render: () => (
-            <span className="swap-action">
-              <Link to="/swap">Swap</Link>
-            </span>
+          render: (payload) => (
+            <div>
+              <label className="swap-action" onClick={handleClickSwap}>
+                 Swap
+                 <input name = "coinId" value={payload.id}/>
+              </label>
+            
+            </div>
           )
         },
         {
@@ -77,15 +91,22 @@ export default function ListCryptos() {
         }
     ]
     
+    // {id: 'tether', symbol: 'usdt', name: 'Tether', image: 'https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707', current_price: 1.001, …}
+
+
     const [data,setData] =useState([]);
      const loadRecords = (dataIndex) => {
-      console.log(dataIndex);
        setData(dataApi)
     }
     useEffect(()=>{
       loadRecords(0)
     },[dataApi])
-
+    
+    // useEffect(()=> {
+    //   const coinSwap = dataApi.find((item)=> {
+    //     return item.id == idSwap;
+    //   })
+    // },[idSwap])
     const [dataSearch,setDataSearch] = useState();
     const handleChange = (e) => {
       //  console.log(e.target.value);

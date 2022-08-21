@@ -4,9 +4,10 @@ const { Option } = Select;
 
 
 export default function SelectCustom (props) {
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
+  const handleChange = (value,key) => {
+      props.event(key.key);
   };
+
   const listItem = props.listItem;
   
   return (
@@ -21,7 +22,7 @@ export default function SelectCustom (props) {
         className="select__block"
       >
         {listItem.map((item) => 
-            <Option value= {item}>{item}</Option>
+            <Option value= {item.coin} key = {item.key}>{item.coin}</Option>
         )}
 
     </Select>
