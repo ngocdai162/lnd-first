@@ -8,7 +8,8 @@ const Wallet = () => {
    const listItem = useSelector(walletSelector);
    const [activeCoin,setActiveCoin] = useState(1)
    const getKey = (activeKey) => {
-    setActiveCoin(activeKey-1)
+    setActiveCoin(activeKey)
+    console.log(activeKey);
     return activeKey;
    }
     return (

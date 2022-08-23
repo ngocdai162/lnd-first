@@ -6,6 +6,8 @@ const { Option } = Select;
 export default function SelectCustom (props) {
   const handleChange = (value,key) => {
       props.event(key.key);
+      console.log(value);
+      console.log(key.key);
   };
 
   const listItem = props.listItem;
@@ -21,8 +23,8 @@ export default function SelectCustom (props) {
         onChange={handleChange}
         className="select__block"
       >
-        {listItem.map((item) => 
-            <Option value= {item.coin} key = {item.key}>{item.coin}</Option>
+        {listItem.map((item,index) => 
+            <Option value= {item.coin} key = {index}>{item.coin}</Option>
         )}
 
     </Select>

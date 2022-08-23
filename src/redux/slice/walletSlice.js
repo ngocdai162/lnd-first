@@ -1,10 +1,9 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {bindActionCreators, createSlice} from "@reduxjs/toolkit";
 const walletSlice = createSlice({
     name: 'wallet',
     initialState: {
         collection : [
             {   
-                key: 1,
                 id: 'usd',
                 coin: "USD",
                 imgSrc: '',
@@ -12,7 +11,6 @@ const walletSlice = createSlice({
                 amount: 120
             },
             {   
-                key: 2,
                 id: 'lnd',
                 coin: "LND",
                 imgSrc: '',
@@ -20,8 +18,11 @@ const walletSlice = createSlice({
                 amount: 30
             },
             {
-                id: "bitcoin",
-                amount: 60
+                id: 'bitcoin',
+                coin: "LND",
+                imgSrc: '',
+                price: 15,
+                amount: 30
             }
         ],
         status: "",
@@ -36,8 +37,14 @@ const walletSlice = createSlice({
         addCoin(state,action) {
             state.collection.push(action.payload);
         },
-       
+        //update amount cho coin 
+        updateCoin(state,action) {
+           const indexCoinSwap = state.collection.findIndex(({id}) => id===action.payload.coinSwap.id)
+           state.collection[indexCoinSwap].amount =state.collection[indexCoinSwap].amount + action.payload.coinSwap.changeValue;
+           const indexLnd = state.collection.findIndex(({id}) => id===action.payload.lnd.id)
+           state.collection[indexLnd].amount =state.collection[indexLnd].amount + action.payload.lnd.changeValue;
+        }
     }
 })
-export const {getUSD, addCoin} =  walletSlice.actions;
+export const {getUSD, addCoin,updateCoin} =  walletSlice.actions;
 export default walletSlice.reducer;
