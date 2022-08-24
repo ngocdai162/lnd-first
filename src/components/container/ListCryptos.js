@@ -61,7 +61,7 @@ export default function ListCryptos() {
             <div>
               <label className="swap-action" onClick={handleClickSwap}>
                  Swap
-                 <input name = "coinId" value={payload.id}/>
+                 <input name = "coinId" value={payload.id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
               </label>
             
             </div>

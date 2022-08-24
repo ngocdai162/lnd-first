@@ -68,6 +68,9 @@
                         bottom: -30px;
                         color: $primary-color;
                     }
+                    .not-enough {
+                        color: $primary-color;
+                    }
                 }
                 span {
                     color: $while-color;
@@ -130,6 +133,7 @@
             @include flex-between;
             span {
                 @include primary-text;
+                color: $while-color;
             }
             &__block {
                 display: flex;

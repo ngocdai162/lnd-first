@@ -13,13 +13,13 @@ const walletSlice = createSlice({
             {   
                 id: 'lnd',
                 coin: "LND",
-                imgSrc: '',
+                imgSrc: '../images/lnd-logo.png',
                 price: 15,
                 amount: 30
             },
             {
                 id: 'bitcoin',
-                coin: "LND",
+                coin: "Bitcoin",
                 imgSrc: '',
                 price: 15,
                 amount: 30
@@ -35,7 +35,11 @@ const walletSlice = createSlice({
         },
         //add them coin luc swap
         addCoin(state,action) {
-            state.collection.push(action.payload);
+            state.collection.push(action.payload.coinSwap);
+            console.log("id");
+            console.log(action.payload.lnd.id);
+            const indexLnd = state.collection.findIndex(({id}) => id==action.payload.lnd.id)
+            state.collection[indexLnd].amount = state.collection[indexLnd].amount + action.payload.lnd.changeValue;
         },
         //update amount cho coin 
         updateCoin(state,action) {
