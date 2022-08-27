@@ -28,9 +28,9 @@ const MainChart = styled.div`
 const CoinChart = () => {
   const dispatch = useDispatch();
   const coin = useSelector(coinChartSelector) ;
-  useEffect(()=> {
+  // useEffect(()=> {
 
-  })
+  // })
 
   const [historicData, setHistoricData] = useState();
   const [days, setDays] = useState(1);

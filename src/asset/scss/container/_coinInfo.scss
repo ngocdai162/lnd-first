@@ -1,10 +1,67 @@
 .coin-info {
     display: flex;
     justify-content: space-between;
+    padding: $padding-block;
+    background-color: $background-content;
+    border-radius: $radius-10;
     &__detail {
         width: 30%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .crypto-logo {
+            margin-top: 60px;
+            width: 100px !important;
+            height: 100px !important;
+        }
+        p {
+            // color: $while-color;
+            // font-size: 20px;;
+            // font-weight: 500;
+            @include text-18;
+            span {
+                color: $primary-color;
+            }
+        }
+        button {
+            margin-top: 44px;
+        }
+        h1 {
+            color: $while-color;
+            font-weight: 500;
+            margin: {
+                top: 10px;
+                bottom: 30px;
+            }
+        }
+     
     }
     &__chart {
         width: 70%;
+        .select-button {
+            @include text-18;
+            font-weight: 500;
+            width: 160px;
+            height: $height-module;
+            border-radius: $radius-10;
+            text-align: center;
+            line-height: 100%;
+            cursor: pointer;
+            &:hover {
+                background-color: rgb(71, 58, 22);
+            }
+        }
+        .false {
+            // background-color: rgb(148, 148, 53);
+            background-color: transparent;
+            border-color: $primary-color;
+        }
+        .true {
+            background-color:  $primary-color;
+            border: 0px;
+            &:hover {
+                background-color: $primary-color;
+            }
+        }
     }
 }

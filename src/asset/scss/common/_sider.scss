@@ -71,6 +71,14 @@
         display: flex;
         justify-content: center;
         padding-left: $padding-block;
+        button {
+            border: 1px solid $primary-color;
+            background-color: transparent;
+            // border-color: $primary-color !important;
+            &:hover {
+                background-color: rgb(71, 58, 22);
+            }
+        }
     }
     
 }
