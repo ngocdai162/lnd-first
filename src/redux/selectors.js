@@ -7,5 +7,6 @@ export const lndSelector = (state) => state.lndCoin;
 export const coinSwapSelector = (state) => state.coinSwap;
 export const feeSelector = (state) => state.lndMarketCap.fee;
 export const lndMarketCapSelector = (state) => state.lndMarketCap.marketCap;
+export const coinChartSelector = (state) =>state.coinChart;
 
  

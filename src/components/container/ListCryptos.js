@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listCryptoSelector } from "../../redux/selectors";
 import { fetchListCrypto } from "../../redux/slice/listCryptoSlice";
 import { swapToLND } from "../../redux/slice/coinSwapSlice";
+import { getCoinChart } from "../../redux/slice/coinChartSlice";
 export default function ListCryptos() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -19,10 +20,17 @@ export default function ListCryptos() {
         let coinSwap = dataApi.find((item)=> {
           return item.id == e.target.querySelector('input').value;
         })
-        console.log(coinSwap)
+        // console.log(coinSwap)
         dispatch(swapToLND(coinSwap));
         navigate('/swap');
       }
+    }
+    const handleClickViewChart = (e) => {
+      let coinChart = dataApi.find((item)=> {
+        return item.id == e.target.querySelector('input').value;
+      })
+      dispatch(getCoinChart(coinChart));
+      navigate('/chart');
     }
     const columns = [
         {
@@ -63,7 +71,10 @@ export default function ListCryptos() {
                  Swap
                  <input name = "coinId" value={payload.id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
               </label>
-            
+              <label className="swap-action" onClick={handleClickViewChart}>
+                 View chart
+                 <input name = "coinChart" value={payload.id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
+              </label>
             </div>
           )
         },
@@ -92,24 +103,30 @@ export default function ListCryptos() {
     ]
     
     // {id: 'tether', symbol: 'usdt', name: 'Tether', image: 'https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707', current_price: 1.001, …}
-
+    
 
     const [data,setData] =useState([]);
      const loadRecords = (dataIndex) => {
-       setData(dataApi)
+      if(dataSearch=='') {
+        setData(dataApi)
+      } else {
+          let filteredData = data.filter( (data) => {
+            if(data.name==dataSearch)
+            {
+             return true;
+            } 
+             return false;
+          }
+         );
+         setData(filteredData);
+      }
     }
     useEffect(()=>{
       loadRecords(0)
-    },[dataApi])
+    },[])
     
-    // useEffect(()=> {
-    //   const coinSwap = dataApi.find((item)=> {
-    //     return item.id == idSwap;
-    //   })
-    // },[idSwap])
-    const [dataSearch,setDataSearch] = useState();
+    const [dataSearch,setDataSearch] = useState('');
     const handleChange = (e) => {
-      //  console.log(e.target.value);
        setDataSearch(e.target.value)
     }
     const handleSearch = () => {
@@ -119,7 +136,22 @@ export default function ListCryptos() {
           return true;
         } 
         return false;
-
+      }
+      );
+      setData(filteredData);
+    }
+    // useEffect(()=> {
+    //   if(dataSearch!=null) {
+    //     setData(handleSearch());
+    //   }
+    // })
+    if(dataSearch!='') {
+      const filteredData = data.filter( (data) => {
+        if(data.name==dataSearch)
+        {
+          return true;
+        } 
+        return false;
       }
       );
       setData(filteredData);
@@ -236,7 +268,7 @@ export default function ListCryptos() {
                  total:  totalPages,
                  onChange: (totalPages) => {
                   loadRecords(totalPages);
-                 },
+                 }
               }}
              />
             </div>

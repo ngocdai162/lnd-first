@@ -7,6 +7,7 @@ import lndCoinReducer from "./slice/lndCoinSlice";
 import coinActiveReducer from "./slice/walletSlice";
 import coinSwapReducer from "./slice/coinSwapSlice";
 import lndMarketCapReducer from "./slice/lndMarketCapSlice";
+import coinChartReducer from "./slice/coinChartSlice";
 const store = configureStore({
     reducer: {
         isUser: isUserReducer,
@@ -15,7 +16,8 @@ const store = configureStore({
         wallet: walletReducer,
         lndCoin: lndCoinReducer,
         coinSwap: coinSwapReducer,
-        lndMarketCap: lndMarketCapReducer
+        lndMarketCap: lndMarketCapReducer,
+        coinChart: coinChartReducer,
         // test : testReducer
     }
 })

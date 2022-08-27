@@ -11,7 +11,8 @@ export default function LoginPage() {
     const dispatch = useDispatch();
     const onFinish = (values) => {
         // console.log('Received values of form: ', values);
-        navigate('/listCryptos');   
+        navigate('/listCryptos'); 
+        // navigate('/chart');   
         dispatch(setIsUser(true));
     };
     const [forgotFlag,setForgotFlag] = useState(0);

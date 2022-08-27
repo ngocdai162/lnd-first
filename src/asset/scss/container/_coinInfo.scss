@@ -1,0 +1,10 @@
+.coin-info {
+    display: flex;
+    justify-content: space-between;
+    &__detail {
+        width: 30%;
+    }
+    &__chart {
+        width: 70%;
+    }
+}
