@@ -6,6 +6,7 @@ import ButtonCustom from "../modules/ButtonCustom";
 import CryptoLogo from "../modules/modules__container/CryptoLogo";
 import CoinChart from "./CoinChart";
 import { swapToLND } from "../../redux/slice/coinSwapSlice";
+import {ArrowLeftOutlined} from '@ant-design/icons';
 
 const CoinInfo = () => {
     const dispatch = useDispatch();
@@ -23,10 +24,16 @@ const CoinInfo = () => {
             dispatch(swapToLND(coinSwap));
             navigate('/swap');
    }
+   const handleBack = () => {
+       navigate('/listCryptos')
+   }
     
     return (
         <div className="coin-info">
             <div className="coin-info__detail">
+              <p className="coin-info__detail__back">
+                 <ArrowLeftOutlined onClick={handleBack}/>
+              </p>
               <CryptoLogo srcImg={coin.imgSrc}/>
               <h1>{coin.coin}</h1>
               <p>Rank: <span>{coin.marketCapRank}</span></p>

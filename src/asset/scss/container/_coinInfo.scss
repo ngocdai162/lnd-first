@@ -9,8 +9,16 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        &__back {
+            width: 100%;
+            text-align: left;
+            span {
+                font-size: 30px;
+                cursor: pointer;
+            }
+        }
         .crypto-logo {
-            margin-top: 60px;
+            margin-top: 28px;
             width: 100px !important;
             height: 100px !important;
         }

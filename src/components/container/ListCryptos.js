@@ -25,6 +25,14 @@ export default function ListCryptos() {
         navigate('/swap');
       }
     }
+    const handleClickSwapTop = (id) => {
+      let coinSwap = dataApi.find((item)=> {
+        return item.id ==  id;
+      })
+      // console.log(coinSwap)
+      dispatch(swapToLND(coinSwap));
+      navigate('/swap');
+    }
     const handleClickViewChart = (e) => {
       let coinChart = dataApi.find((item)=> {
         return item.id == e.target.querySelector('input').value;
@@ -71,32 +79,19 @@ export default function ListCryptos() {
                  Swap
                  <input name = "coinId" value={payload.id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
               </label>
-              <label className="swap-action" onClick={handleClickViewChart}>
-                 View chart
-                 <input name = "coinChart" value={payload.id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
-              </label>
             </div>
           )
         },
         {
-          title: "Favorites",
-          dataIndex: "favorite",
+          title: "Chart",
+          dataIndex: "",
           key: 6,
-          filters: [
-            {
-              text: 'Favorite',
-              value: 'true',
-            },
-            {
-              text: 'No Favorite',
-              value: 'false',
-            },
-          ],
-          onFilter: (value, record) => record.favorite.indexOf(value) === 0,
           render: (payload) => (
             <div>
-               {payload== "true" && <i class="fa-solid fa-star favorite-star"></i>} 
-               {payload== "false" &&  <i class="fa-solid fa-star"></i>} 
+              <label className="swap-action" onClick={handleClickViewChart}>
+                 View chart
+                 <input name = "coinChart" value={payload.id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
+              </label>
             </div>
           )
         }
@@ -177,7 +172,10 @@ export default function ListCryptos() {
                         <td>{dataApi[0].current_price}</td>
                         <td>{dataApi[0].market_cap}</td>
                         <td>
-                          <span>Swap</span>
+                          <label className="swap-action" onClick={handleClickSwap}>
+                              Swap
+                              <input name = "coinId" value={dataApi[0].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
+                          </label>
                         </td>
                     </tr>
                     <tr className="test">
@@ -188,7 +186,10 @@ export default function ListCryptos() {
                         <td>{dataApi[1].current_price}</td>
                         <td>{dataApi[1].market_cap}</td>
                         <td>
-                          <span>Swap</span>
+                          <label className="swap-action" onClick={handleClickSwap}>
+                              Swap
+                              <input name = "coinId" value={dataApi[1].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
+                          </label>
                         </td>
                     </tr>
                     <tr className="test">
@@ -199,7 +200,10 @@ export default function ListCryptos() {
                         <td>{dataApi[2].current_price}</td>
                         <td>{dataApi[2].market_cap}</td>
                         <td>
-                          <span>Swap</span>
+                          <label className="swap-action" onClick={handleClickSwap}>
+                              Swap
+                              <input name = "coinId" value={dataApi[2].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
+                          </label>
                         </td>
                     </tr>
                  </table>
@@ -221,7 +225,10 @@ export default function ListCryptos() {
                         <td>{dataApi[dataApi.length - 1].current_price}</td>
                         <td>{dataApi[dataApi.length - 1].market_cap}</td>
                         <td>
-                          <span>Swap</span>
+                          <label className="swap-action" onClick={handleClickSwap}>
+                              Swap
+                              <input name = "coinId" value={dataApi[dataApi.length - 1].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
+                          </label>
                         </td>
                     </tr>
                     <tr className="test">
@@ -232,7 +239,10 @@ export default function ListCryptos() {
                         <td>{dataApi[dataApi.length - 2].current_price}</td>
                         <td>{dataApi[dataApi.length - 2].market_cap}</td>
                         <td>
-                          <span>Swap</span>
+                          <label className="swap-action" onClick={handleClickSwap}>
+                              Swap
+                              <input name = "coinId" value={dataApi[dataApi.length - 2].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
+                          </label>
                         </td>
                     </tr>
                     <tr className="test">
@@ -243,7 +253,10 @@ export default function ListCryptos() {
                         <td>{dataApi[dataApi.length - 3].current_price}</td>
                         <td>{dataApi[dataApi.length - 3].market_cap}</td>
                         <td>
-                          <span>Swap</span>
+                          <label className="swap-action" onClick={handleClickSwap}>
+                              Swap
+                              <input name = "coinId" value={dataApi[dataApi.length - 3].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
+                          </label>
                         </td>
                     </tr>           
                  </table>

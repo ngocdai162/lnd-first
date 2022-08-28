@@ -5,15 +5,22 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { setIsUser } from "../redux/slice/isUserSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom'; //chuyển hương trang
+import { useSelector } from "react-redux";
+import { isUserSelector } from "../redux/selectors";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
     const dispatch = useDispatch();
+   const isUser = useSelector(isUserSelector);
+   useEffect(()=> {
+    localStorage.setItem('isUser', isUser)
+  },[isUser]);
     const onFinish = (values) => {
         // console.log('Received values of form: ', values);
-        navigate('/listCryptos'); 
         // navigate('/chart');   
         dispatch(setIsUser(true));
+        navigate('/listCryptos'); 
     };
     const [forgotFlag,setForgotFlag] = useState(0);
     const handleForgot = () => {
