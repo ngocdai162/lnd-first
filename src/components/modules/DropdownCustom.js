@@ -8,13 +8,13 @@ export default function DropdownCustom (props) {
           items={[
             {
               label: (
-                <Link to="/setting" onClick={props.propsDropdown.event1}>{props.propsDropdown.item1}</Link>
+                <Link to="setting" onClick={props.propsDropdown.event1}>{props.propsDropdown.item1}</Link>
               ),
               key: '0',
             },
             {
               label: (
-                <Link to="" onClick={props.propsDropdown.event2}>{props.propsDropdown.item2}</Link>
+                <Link to="/login" onClick={props.propsDropdown.event2}>{props.propsDropdown.item2}</Link>
               ),
               key: '1',
             },

@@ -1,62 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Modal } from 'antd';
-import { MinusOutlined, ArrowRightOutlined, AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
-import ButtonCustom from '../modules/ButtonCustom';
-import CryptoLogo from '../modules/modules__container/CryptoLogo';
-import InputItem from '../modules/InputCustom';
+import React, { useRef, useState, useEffect } from 'react';
+import ButtonCustom from "../modules/ButtonCustom";
+import CryptoLogo from "../modules/modules__container/CryptoLogo";
+import { Modal } from 'antd';
+import {ArrowRightOutlined} from '@ant-design/icons';
 import InputCustom from '../modules/InputCustom';
-import { usdSelector ,lndSelector } from '../../redux/selectors';
-import { useSelector } from 'react-redux';
+import { usdSelector ,lndSelector, feeProject, profitProject } from '../../redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFee } from '../../redux/slice/projectSlice';
+import { typeAccountSelector } from '../../redux/selectors';
 
 export default function Sider() {
+  const dispatch  = useDispatch();
   const [valueConvert,setValueConvert] = useState(0);
   const [valueResult,setValueResult] = useState(0);
   const [errorValue,setErrorValue] = useState(false);
+//   const [isAdmin,setIsAdmin] = useState(false);
   const usd= useSelector(usdSelector);
   const lnd = useSelector(lndSelector);
-    function getItem(label, key, icon, children, type) {
-        return {
-          key,
-          icon,
-          children,
-          label,
-          type,
-        };
-      }
-      
-      const items = [
-        getItem('Navigation One', 'sub1', <MailOutlined />, [
-          getItem('Option 1', '1'),
-          getItem('Option 2', '2'),
-          getItem('Option 3', '3'),
-          getItem('Option 4', '4'),
-        ]),
-
-        getItem('Navigation True', 'sub4', <SettingOutlined />, [
-          getItem('Option 9', '9'),
-          getItem('Option 10', '10'),
-          getItem('Option 11', '11'),
-          getItem('Option 12', '12'),
-        ]),
-      ]; // submenu keys of first level
-      
-      const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
-     
-      
-      const [openKeys, setOpenKeys] = useState(['sub1']);
-
-  const onOpenChange = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-
-    if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      setOpenKeys(keys);
-    } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-    }
-  }   
-  
-  //Modal
+  const fee = useSelector(feeProject);
+  const profit = useSelector(profitProject);
+  const typeAccount = useSelector(typeAccountSelector);
+//   console.log(typeAccount);
+  const inputFee = useRef();
+//   const isAdmin = true;
+  let isAdmin;
+  if(typeAccount == "admin") {
+     isAdmin = true;
+  } else {
+     isAdmin = false;
+  }
+  const  handleUpdateFee = () => {
+   dispatch(setFee(inputFee.current.value));
+  }
+//   const profit = '5214123';
+//   const fee = '23'
+  const lndCoin = {
+      rank: '24',
+      marketCap: '1241234',
+      price: '14312',
+  }
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
     setIsModalVisible(true);
@@ -67,41 +49,47 @@ export default function Sider() {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-   
-  //Xử lý convert to lnd
+
   const handleChangeConvert = (e) => {
-    setValueConvert(e.target.value);
+   setValueConvert(e.target.value);
+ }
+ useEffect(()=>{
+  if(isNaN(valueConvert) || (valueConvert > usd.amount) ) {
+   setErrorValue(true);
+  } else {
+   setValueResult(valueConvert/lnd.price);
+   setErrorValue(false);
   }
-  useEffect(()=>{
-   if(isNaN(valueConvert) || (valueConvert > usd.amount) ) {
-    setErrorValue(true);
-   } else {
-    setValueResult(valueConvert/lnd.price);
-    setErrorValue(false);
-   }
-  },[valueConvert])
-  
-    return (
+ },[valueConvert])
+  return (
         <div className="sider">
              <div className='sider__title'>
                <img src="../../images/lnd-logo.png"/>
                <img src="../../images/lnd-title.png"/>
             </div>
-            <div className='sider__menu'>
-              <Menu
-                mode="inline"
-                openKeys={openKeys}
-                onOpenChange={onOpenChange}
-                style={{
-                  width: 200,
-                }}
-                items={items}
-              />
+            {/* <SiderUser/> */}
+            <div className="sider-main">
+         <div className="sider-main__info">
+            <CryptoLogo srcImg='../../images/lnd-logo.png'/>
+            <h1>LND-COIN</h1>
+            <p>Rank: <span>{lndCoin.rank}</span></p>
+            <p>Market Cap: <span>{lndCoin.marketCap}</span></p>
+            <p>Current Price (USD) : <span>{lndCoin.price}</span> </p>
+            {isAdmin && <h2>Profit: <span>{profit}</span></h2>}
+         </div>
+         {isAdmin ?  
+         <div className="sider-main__action">
+            <div className='sider-main__action__fee'>
+               <p>Update Fee</p>
+               <p>Current fee : <span>{fee}</span></p>
             </div>
-            <div className='buy-coin'>
+            <input ref={inputFee}/>
+            <ButtonCustom text = 'Update' event = {handleUpdateFee}/>
+         </div> : 
+          <div className='buy-coin'>
               <ButtonCustom text="Buy LND-COIN" event={showModal}/>
-            </div>
-            <Modal title="Convert to LND-COIN" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+          </div>}
+         {!isAdmin && <Modal title="Convert to LND-COIN" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
               <div className='wallet-item'>
                 <div className='wallet-item__title wallet-usd__title'>
                   <CryptoLogo srcImg='../images/cryptoLogo/bitcoin-btc-logo.png'/>
@@ -123,7 +111,8 @@ export default function Sider() {
                 </div>
                 <p className='result'>Result : {valueResult} LND</p>
               </div>
-            </Modal>
+         </Modal>}
+       </div>
         </div>
     )
 }

@@ -22,10 +22,10 @@ const CoinInfo = () => {
                 current_price: coin.price
             }
             dispatch(swapToLND(coinSwap));
-            navigate('/swap');
+            navigate('/home/swap');
    }
    const handleBack = () => {
-       navigate('/listCryptos')
+       navigate('/home/listCryptos')
    }
     
     return (

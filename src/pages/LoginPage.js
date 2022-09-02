@@ -8,25 +8,44 @@ import { useNavigate } from 'react-router-dom'; //chuyển hương trang
 import { useSelector } from "react-redux";
 import { isUserSelector } from "../redux/selectors";
 import { useEffect } from "react";
+import { account } from "../config/data";
+import { loginUser } from "../redux/apiRequest";
 
+// password: "dddddd"
+// remember: true
+// username: "dfddddd"
 export default function LoginPage() {
-  const navigate = useNavigate();
+   const navigate = useNavigate();
     const dispatch = useDispatch();
    const isUser = useSelector(isUserSelector);
-   useEffect(()=> {
-    localStorage.setItem('isUser', isUser)
-  },[isUser]);
     const onFinish = (values) => {
-        // console.log('Received values of form: ', values);
+        console.log('Received values of form: ', values);
+        const newUser = {
+           userName: values.username,
+           passWord: values.password
+        }
+        loginUser(newUser, dispatch, navigate);
+
         // navigate('/chart');   
-        dispatch(setIsUser(true));
-        navigate('/listCryptos'); 
+        // if((values.username == account.admin.userName) && (values.password == account.admin.password)) {
+        //   console.log("admin")
+        //   dispatch(setIsUser({isUser: true, type: "admin"}));
+        //   // navigate('/home/admin'); 
+        // } else 
+        // if(((values.username == account.user.userName) && (values.password == account.user.password)) ) {
+        //   console.log("user")
+        //   dispatch(setIsUser({isUser: true, type: "user"}));
+        //   // navigate('/home/listCryptos'); 
+
+        // }       // navigate('/home/admin'); 
     };
     const [forgotFlag,setForgotFlag] = useState(0);
     const handleForgot = () => {
       setForgotFlag(1);
     }
     const handleLogin = () => {
+      // navigate('/home/listCryptos'); 
+
     }
     return(
       <div className="p-login">

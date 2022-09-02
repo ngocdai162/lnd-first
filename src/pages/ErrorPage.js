@@ -52,7 +52,7 @@ export default function ErrorPage() {
           <DetailContent>
             Something went wrong. Looks like the page you are looking for is missing. Please continue to out homepage.
           </DetailContent>
-          <Link to = '/listCryptos'>
+          <Link to = 'home/listCryptos'>
             <GoHomeButton>Go Home</GoHomeButton>
           </Link>
          

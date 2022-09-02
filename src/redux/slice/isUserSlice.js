@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const isUserSlice = createSlice({
     name: "isUser",
     initialState: {
-        isUserFlag :  false,
+        isUserFlag : null,
+        type: null
     },
     reducers: {
         setIsUser (state,action) {
-            state.isUserFlag = action.payload;
+            state.isUserFlag = action.payload.isUser;
+            state.type = action.payload.type;
         }
     }
 })

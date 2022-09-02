@@ -88,7 +88,7 @@ const Swap = () => {
     }
    },[valueSwap])
   const handleCancel = () => {
-    navigate("/listCryptos")
+    navigate("/home/listCryptos")
   }
   const handleSwap = () => {
     let coinWalletUpdate;

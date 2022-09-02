@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer  from './slice/userSlice'
 import isUserReducer from "./slice/isUserSlice";
 import listCryptoReducer from "./slice/listCryptoSlice";
@@ -8,19 +8,47 @@ import coinActiveReducer from "./slice/walletSlice";
 import coinSwapReducer from "./slice/coinSwapSlice";
 import lndMarketCapReducer from "./slice/lndMarketCapSlice";
 import coinChartReducer from "./slice/coinChartSlice";
+import authReducer from "./slice/authSlice";
 import tempReducer from "./slice/tempSlice";
-const store = configureStore({
-    reducer: {
-        isUser: isUserReducer,
-        user: userReducer,
-        listCrypto : listCryptoReducer,
-        wallet: walletReducer,
-        lndCoin: lndCoinReducer,
-        coinSwap: coinSwapReducer,
-        lndMarketCap: lndMarketCapReducer,
-        coinChart: coinChartReducer,
-        temp : tempReducer
-        // test : testReducer
-    }
+import projectReducer from "./slice/projectSlice";
+import {
+    persistStore,
+    persistReducer,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+  } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+};
+const rootReducer = combineReducers({
+    isUser: isUserReducer,
+    user: userReducer,
+    listCrypto : listCryptoReducer,
+    wallet: walletReducer,
+    lndCoin: lndCoinReducer,
+    coinSwap: coinSwapReducer,
+    lndMarketCap: lndMarketCapReducer,
+    coinChart: coinChartReducer,
+    temp : tempReducer,
+    project: projectReducer,
+    auth: authReducer
+});
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+export const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 })
-export default store;
+export let persistor = persistStore(store);

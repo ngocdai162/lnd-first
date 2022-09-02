@@ -24,9 +24,12 @@ const MainChart = styled.div`
       padding: 40;
 `
 
-const CoinChart = () => {
+const LndChart = () => {
   const dispatch = useDispatch();
-  const coin = useSelector(coinChartSelector) ;
+//   const coin = useSelector(coinChartSelector) ;
+  const coin = {
+    id: "bitcoin"
+  }
   // useEffect(()=> {
 
   // })
@@ -121,4 +124,4 @@ const CoinChart = () => {
   );
 };
 
-export default CoinChart;
+export default LndChart;

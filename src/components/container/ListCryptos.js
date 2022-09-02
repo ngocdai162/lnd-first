@@ -22,7 +22,7 @@ export default function ListCryptos() {
         })
         // console.log(coinSwap)
         dispatch(swapToLND(coinSwap));
-        navigate('/swap');
+        navigate('/home/swap');
       }
     }
     const handleClickSwapTop = (id) => {
@@ -31,14 +31,14 @@ export default function ListCryptos() {
       })
       // console.log(coinSwap)
       dispatch(swapToLND(coinSwap));
-      navigate('/swap');
+      navigate('/home/swap');
     }
     const handleClickViewChart = (e) => {
       let coinChart = dataApi.find((item)=> {
         return item.id == e.target.querySelector('input').value;
       })
       dispatch(getCoinChart(coinChart));
-      navigate('/chart');
+      navigate('/home/chart');
     }
     const columns = [
         {

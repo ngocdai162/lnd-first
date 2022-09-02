@@ -35,7 +35,7 @@ const UserEdit = () => {
     onSubmit: (values) => {
       //userUPdate = values   dispatch update 
       console.log(values);
-      navigate('/listCryptos');
+      navigate('/home/listCryptos');
     }
   })
   
@@ -111,7 +111,7 @@ const UserEdit = () => {
                  }}
               />   
               <div>
-                 <button className="primary-btn submit-btn btn-1" onClick={() => {navigate('/listCryptos')}} >Cancel</button>
+                 <button className="primary-btn submit-btn btn-1" onClick={() => {navigate('/home/listCryptos')}} >Cancel</button>
                  <button type = 'submit' className="primary-btn submit-btn">Submit</button>
               </div>
             </form>
