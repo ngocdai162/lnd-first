@@ -19,7 +19,7 @@ export default function FirstPage() {
                Blockchain technology does not often stand by itself but is usually mentioned in conjunction with crypto currencies. Tyler Winkelvoss mentions that they invest their money in Bitcoin, but David Marcus sees Bitcoin as an investment instrument as well. Julian Assange also refers primarily to the value of Bitcoin as he mentions that Bitcoin is currently taking off. Finally, Peter Thiel adds that Bitcoin was successful at the level of a new currency.
                Blockchain has disruptive power. Ginni Rometty mentions that Blockchain can vastly improve the efficiency of a supply chain. The co-founder of Ethereum, Vitalik Buterin, is even more explicit: Blockchain will make middlemen obsolete and therefore replace companies like, e.g. Uber.
                Blockchain still has a long way to go. Especially when we look at Peter Thiel’s statement that Bitcoin is still very difficult to use, it becomes apparent. On the one hand, this shows that Bitcoin is anything but perfect. On the other hand, it also shows that, despite the recent hype, there is still a lot of room for improvement. We can remain curious to see in which areas the blockchain will become more relevant in the long term.</p>
-            <Link to="/logIn">
+            <Link to="/">
               <ButtonCustom text='Get Started'></ButtonCustom>
             </Link>
           </div>

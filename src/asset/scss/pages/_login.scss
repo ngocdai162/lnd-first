@@ -97,10 +97,13 @@
                         color: $while-color;
                     }
                 }
-                
+               
             }
         }
     }
-    
+    .login-fail {
+        color: $primary-color !important;
+        margin-top: 5px;
+    }
     
 }

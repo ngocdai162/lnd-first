@@ -14,7 +14,7 @@ import Register  from './pages/Register';
 import UserEdit from './components/container/UserEdit';
 import Swap from './components/container/Swap';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { isUserSelector, tempSelector } from './redux/selectors';
+import { currentUserSelector, isUserSelector, tempSelector } from './redux/selectors';
 import { setIsUser } from './redux/slice/isUserSlice';
 import Wallet from './pages/Wallet';
 // import { fetchListCrypto } from './redux/slice/listCryptoSlices';
@@ -26,6 +26,7 @@ import { fetchLndCoin } from './redux/slice/tempSlice';
 import ErrorPage from './pages/ErrorPage';
 import MainLayout from './components/layout/MainLayout';
 import Admin from './components/container/Admin';
+import ProtectedRoute from './components/layout/ProtectedRoute';
 // import {fetchListCrypto} from './redux/slice/listCryptoSlice'
 //Api Coin
 //https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false
@@ -33,10 +34,16 @@ import Admin from './components/container/Admin';
 function App() {
   const dispatch = useDispatch();
   const isUser = useSelector(isUserSelector);
+  const user = useSelector(currentUserSelector);
+  useEffect(() => {
+    console.log(user);
+  },[user])
+ 
   // const [isUser, setIsUser] = useState(null);
   // setInterval(()=> {
   //   dispatch(fetchListCrypto())
   // },1000)
+
 
 
   //tạmmmmmmmmmmmm
@@ -44,42 +51,29 @@ function App() {
     dispatch(fetchListCrypto())
   },[]);
   
-//   useEffect(()=> {
-//     const  u = localStorage.getItem('isUser');
-//     u && JSON.parse(u) ? setIsUser(true) : setIsUser(false);
-//     console.log(u);
-//   },[]);
-
-//   useEffect(()=> {
-//     localStorage.setItem('isUser', isUser)
-//   },[isUser]);
-//  console.log(isUser);
-  // window.addEventListener('load', (event) => {
-  //    if(isUser == true) {
-  //     dispatch(setIsUser(true));
-  //    } else {
-  //     dispatch(setIsUser(false));
-  //    }
-  // });
-  
     return (
      <Router>
         <Routes>
-           {/* <Route path="" element={<ErrorPage/>} /> */}
-           <Route index  path=""  element={<FirstPage/>} />
-           {!isUser && <Route path="/login" element={<LoginPage/>}/>}
+           {/* Public Route */}
+           <Route index path="/" element={<LoginPage/>}/>
+           <Route path="/about"  element={<FirstPage/>} />
            <Route path="/register" element = {<Register/>}/>
-           <Route path="/login" element={<LoginPage/>}/>
            <Route path="/wallet"element = {<Wallet/>}/>
-           {isUser ?
-            <Route path="/home" element={<MainLayout/>}>
-                <Route path='admin' element={<Admin/>}/>
-                <Route path='listCryptos' element={<ListCryptos/>}/>
-                <Route path='swap' element={<Swap/>}/>
-                <Route path='setting' element={<UserEdit/>}/>
+           {/* Protected Route */}
+           <Route element = {<ProtectedRoute/>}>
+             <Route path="/home" element=<MainLayout/>>
+                <Route path="" element={ <Admin/>}/>
+                {user?.isAdmin == 0 && 
+                <>
+                 <Route path='swap' element={<Swap/>}/>
+                 <Route path='setting' element={<UserEdit/>}/>
+                </> 
+                }
+                <Route path = 'listCryptos' element = {<ListCryptos/>}/>
                 <Route path='chart' element={<CoinInfo/>}/>
-            </Route> :<Route path="/login" element={<LoginPage eventLogin = {()=> {setIsUser(true)}}/>}/>}
-            <Route path='*' element={<ErrorPage/>}/>
+             </Route>
+           </Route>
+          <Route path='*' element={<ErrorPage/>}/>
         </Routes> 
      </Router>
         

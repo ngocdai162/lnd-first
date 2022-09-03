@@ -12,4 +12,7 @@ export const coinChartSelector = (state) =>state.coinChart;
 export const tempSelector = (state) =>state.temp;
 export const feeProject = (state) => state.project.fee;
 export const profitProject = (state) => state.project.profit;
+// Auth 
+export const isErrorLoginSelector = (state) => state.auth.login?.error;
+export const currentUserSelector = (state) => state.auth.login?.currentUser;
 

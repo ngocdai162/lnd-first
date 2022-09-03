@@ -26,14 +26,31 @@
             margin-right: 5px;
         }
     }
-    &__search {
+    &__menu {
         width: 60%;
-        .ant-btn {
-            // background-color: rgb(75, 112, 190);
-            background-color: $primary-color;
-            span {
-                font-size: 25px;
-                font-weight: 700;
+        height: 60%;
+        ul {
+            margin-left: 20px;;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            list-style: none;
+            margin-bottom : 0px;
+            border-left: 2px solid rgb(139, 139, 139);
+            li {
+                margin-right: 30px;
+                a {
+                    font-size: 20px;
+                    color: $primary-color;
+                    opacity: 80%;
+                    &:hover {
+                        color: $primary-color-hover;
+                    }
+                }
+                .activeClass {
+                    opacity: 100% !important;
+                }
+
             }
         }
     }
@@ -61,6 +78,14 @@
                 right: 30px;
             }
             
+        }
+        span {
+            color: $primary-color;
+            font-size: 18px;
+            cursor: pointer;
+            &:hover {
+                color: $primary-color-hover;
+            }
         }
         svg {
             color: #fff;

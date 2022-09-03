@@ -31,12 +31,12 @@ export const usersData = [
   {
     name:"Dũng",
     image:"../images/userAvt1.jpg",
-    amount: 2
+    amount: 1
   },
   {
     name:"Vinh",
     image:"../images/userAvt2.jpg",
-    amount: 2
+    amount: 6
   },
   {
     name:"Nam",
@@ -46,37 +46,37 @@ export const usersData = [
   {
     name:"Văn",
     image:"../images/userAvt1.jpg",
-    amount: 2
+    amount: 4
   },
   {
     name:"Chiến",
     image:"../images/userAvt2.jpg",
-    amount: 2
+    amount: 7
   },
   {
     name:"Sang",
     image:"../images/userAvt1.jpg",
-    amount: 2
+    amount: 8
   },
   {
     name:"Vinh",
     image:"../images/userAvt2.jpg",
-    amount: 2
+    amount: 9
   },
   {
     name:"Dũng",
     image:"../images/userAvt3.jpg",
-    amount: 2
+    amount: 3
   },
   {
     name:"Vinh",
     image:"../images/userAvt1.jpg",
-    amount: 2
+    amount: 10
   },
   {
     name:"Dũng",
     image:"../images/userAvt2.jpg",
-    amount: 2
+    amount: 12
   },
   
   

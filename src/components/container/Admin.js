@@ -14,10 +14,13 @@ import ButtonCustom from "../modules/ButtonCustom";
 
 
 const Admin = () => {
+  console.log("admin");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [dataSearch,setDataSearch] = useState('');
     const [data,setData] =useState([]);
     const [totalPages,setTotalPages] = useState(0);
+    const [filteredData,setFilteredData] = useState([]);
     const dataApi = usersData;
      
     const columns = [
@@ -36,16 +39,40 @@ const Admin = () => {
           dataIndex: "amount",
           key: 2,
           sorter: (a, b) => a.amount - b.amount
+          
         }
     ];
-  
+  //   useEffect (() => {
+  //     setFilteredData(
+  //       data.filter( (dataItem) => {
+  //         console.log("chay")
+  //         if(dataItem.userName.include(dataSearch))
+  //         {
+  //           return true;
+  //         } 
+  //         return false;
+  //       }
+  //       )
+  //     );
+  //     if(filteredData!=[]) {
+  //     console.log(filteredData)
+  //       setData(filteredData);
+  //     }
+  //  },[dataSearch])
     const loadRecords = (dataIndex) => {
-       
            setData(dataApi);
       }
      useEffect(()=>{
         loadRecords(0)
       },[])
+    const handleChange = (e) => {
+      setDataSearch(e.target.value);
+      console.log("ok");
+
+   }
+  
+   
+   
     return (
         <div className="admin">
             <div className="admin__chart coin-info__chart">
@@ -54,6 +81,7 @@ const Admin = () => {
             </div>
             <div className="admin__users">
               <p>Users</p>
+              {/* <InputCustom placeholder= "search" event={handleChange}/> */}
               <Table
                  columns={columns}
                  dataSource={data}

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { setIsUser } from "../redux/slice/isUserSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom'; //chuyển hương trang
 import { useSelector } from "react-redux";
-import { isUserSelector } from "../redux/selectors";
+import { currentUserSelector, isErrorLoginSelector, isUserSelector } from "../redux/selectors";
 import { useEffect } from "react";
 import { account } from "../config/data";
 import { loginUser } from "../redux/apiRequest";
@@ -16,8 +16,16 @@ import { loginUser } from "../redux/apiRequest";
 // username: "dfddddd"
 export default function LoginPage() {
    const navigate = useNavigate();
-    const dispatch = useDispatch();
+   const dispatch = useDispatch();
+   const user = useSelector(currentUserSelector);
+   
+  //  useEffect (()=> {
+  //   if(user?.userName != "") {
+  //     navigate("/home");
+  //   }
+  //  },[user])
    const isUser = useSelector(isUserSelector);
+   const isErrorLogin = useSelector(isErrorLoginSelector);
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
         const newUser = {
@@ -25,19 +33,7 @@ export default function LoginPage() {
            passWord: values.password
         }
         loginUser(newUser, dispatch, navigate);
-
-        // navigate('/chart');   
-        // if((values.username == account.admin.userName) && (values.password == account.admin.password)) {
-        //   console.log("admin")
-        //   dispatch(setIsUser({isUser: true, type: "admin"}));
-        //   // navigate('/home/admin'); 
-        // } else 
-        // if(((values.username == account.user.userName) && (values.password == account.user.password)) ) {
-        //   console.log("user")
-        //   dispatch(setIsUser({isUser: true, type: "user"}));
-        //   // navigate('/home/listCryptos'); 
-
-        // }       // navigate('/home/admin'); 
+         navigate('/home'); 
     };
     const [forgotFlag,setForgotFlag] = useState(0);
     const handleForgot = () => {
@@ -48,6 +44,8 @@ export default function LoginPage() {
 
     }
     return(
+     <>
+      { (user?.userName == "" || user == undefined ) ?
       <div className="p-login">
         <div className="p-login__block">
           <div className="p-login__block__left">
@@ -108,7 +106,9 @@ export default function LoginPage() {
             type="password"
             placeholder="Password"
           />
+         
         </Form.Item>
+        
         {
           forgotFlag 
           && 
@@ -128,6 +128,7 @@ export default function LoginPage() {
         </Form.Item>
         
         }
+        {isErrorLogin && <span class = 'login-fail'>Login failed !</span>}
         <Form.Item>
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>Remember me</Checkbox>
@@ -147,8 +148,9 @@ export default function LoginPage() {
         </Form.Item>
       </Form>
           </div>
-        </div>
-      </div>
+        </div> 
+      </div> : <Navigate to = "/home"/> }
+     </>
     );
   };
   

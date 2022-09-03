@@ -25,6 +25,12 @@
           font-size: 30px;
           color: $primary-color;
         }
+        a {
+            color: $primary-color;
+            font-size: 20px;
+            border-bottom: 2px solid rgb(221, 164, 7);
+            margin-bottom: 20px;
+        }
     }
     &__contact {
         width: 100px;

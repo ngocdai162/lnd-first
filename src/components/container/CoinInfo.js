@@ -12,6 +12,9 @@ const CoinInfo = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const coin = useSelector(coinChartSelector);
+    if(coin.id=="") {
+        navigate('*');
+    }
     // const coin2 = useSelector(coinInfoSelector);
     // console.log(coin2);
     const handleSwap = () => {

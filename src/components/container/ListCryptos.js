@@ -5,11 +5,13 @@ import { useState, useEffect, useRef} from "react";
 import { Table } from "antd";
 import CryptoLogo from "../modules/modules__container/CryptoLogo";
 import { useDispatch, useSelector } from "react-redux";
-import { listCryptoSelector } from "../../redux/selectors";
+import { currentUserSelector, listCryptoSelector } from "../../redux/selectors";
 import { fetchListCrypto } from "../../redux/slice/listCryptoSlice";
 import { swapToLND } from "../../redux/slice/coinSwapSlice";
 import { getCoinChart } from "../../redux/slice/coinChartSlice";
 export default function ListCryptos() {
+  console.log("listCrypto");
+    const user = useSelector(currentUserSelector);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const  dataApi  = useSelector(listCryptoSelector) ;
@@ -40,6 +42,23 @@ export default function ListCryptos() {
       dispatch(getCoinChart(coinChart));
       navigate('/home/chart');
     }
+    var swapColumn;
+    if(user.isAdmin == 0 ) {
+     swapColumn = {
+        title: "Action",
+        dataIndex: "",
+        key: 5,
+        render: (payload) => (
+          <div>
+            <label className="swap-action" onClick={handleClickSwap}>
+               Swap
+               <input name = "coinId" value={payload.id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
+            </label>
+          </div>
+        )
+      }
+    } else swapColumn = {}
+   
     const columns = [
         {
           title: "Name",
@@ -68,20 +87,8 @@ export default function ListCryptos() {
           dataIndex: "price_change_percentage_24h",
           key: 4,
           sorter: (a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h
-        },
-        {
-          title: "Action",
-          dataIndex: "",
-          key: 5,
-          render: (payload) => (
-            <div>
-              <label className="swap-action" onClick={handleClickSwap}>
-                 Swap
-                 <input name = "coinId" value={payload.id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
-              </label>
-            </div>
-          )
-        },
+        },   
+        swapColumn,
         {
           title: "Chart",
           dataIndex: "",
@@ -171,12 +178,12 @@ export default function ListCryptos() {
                         </td>
                         <td>{dataApi[0].current_price}</td>
                         <td>{dataApi[0].market_cap}</td>
-                        <td>
+                        {user.isAdmin == 0 && <td>
                           <label className="swap-action" onClick={handleClickSwap}>
                               Swap
                               <input name = "coinId" value={dataApi[0].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
                           </label>
-                        </td>
+                        </td> }
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
@@ -185,12 +192,12 @@ export default function ListCryptos() {
                         </td>
                         <td>{dataApi[1].current_price}</td>
                         <td>{dataApi[1].market_cap}</td>
-                        <td>
+                        {user.isAdmin == 0 && <td>
                           <label className="swap-action" onClick={handleClickSwap}>
                               Swap
                               <input name = "coinId" value={dataApi[1].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
                           </label>
-                        </td>
+                        </td> }
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
@@ -199,12 +206,12 @@ export default function ListCryptos() {
                         </td>
                         <td>{dataApi[2].current_price}</td>
                         <td>{dataApi[2].market_cap}</td>
-                        <td>
+                        {user.isAdmin == 0 && <td>
                           <label className="swap-action" onClick={handleClickSwap}>
                               Swap
                               <input name = "coinId" value={dataApi[2].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
                           </label>
-                        </td>
+                        </td>}
                     </tr>
                  </table>
                </div>
@@ -224,12 +231,12 @@ export default function ListCryptos() {
                         </td>
                         <td>{dataApi[dataApi.length - 1].current_price}</td>
                         <td>{dataApi[dataApi.length - 1].market_cap}</td>
-                        <td>
+                        {user.isAdmin == 0 && <td>
                           <label className="swap-action" onClick={handleClickSwap}>
                               Swap
                               <input name = "coinId" value={dataApi[dataApi.length - 1].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
                           </label>
-                        </td>
+                        </td>}
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
@@ -238,12 +245,12 @@ export default function ListCryptos() {
                         </td>
                         <td>{dataApi[dataApi.length - 2].current_price}</td>
                         <td>{dataApi[dataApi.length - 2].market_cap}</td>
-                        <td>
+                        {user.isAdmin == 0 && <td>
                           <label className="swap-action" onClick={handleClickSwap}>
                               Swap
                               <input name = "coinId" value={dataApi[dataApi.length - 2].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
                           </label>
-                        </td>
+                        </td>}
                     </tr>
                     <tr className="test">
                         <td className="crypto-name">
@@ -252,12 +259,12 @@ export default function ListCryptos() {
                         </td>
                         <td>{dataApi[dataApi.length - 3].current_price}</td>
                         <td>{dataApi[dataApi.length - 3].market_cap}</td>
-                        <td>
+                        {user.isAdmin == 0 && <td>
                           <label className="swap-action" onClick={handleClickSwap}>
                               Swap
                               <input name = "coinId" value={dataApi[dataApi.length - 3].id} style = {{width: "0px", border:"0px",padding: "0px"}}/>
                           </label>
-                        </td>
+                        </td>}
                     </tr>           
                  </table>
                </div>

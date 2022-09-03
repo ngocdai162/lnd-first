@@ -4,12 +4,13 @@ import CryptoLogo from "../modules/modules__container/CryptoLogo";
 import { Modal } from 'antd';
 import {ArrowRightOutlined} from '@ant-design/icons';
 import InputCustom from '../modules/InputCustom';
-import { usdSelector ,lndSelector, feeProject, profitProject } from '../../redux/selectors';
+import { usdSelector ,lndSelector, feeProject, profitProject, currentUserSelector } from '../../redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFee } from '../../redux/slice/projectSlice';
 import { typeAccountSelector } from '../../redux/selectors';
 
 export default function Sider() {
+  const user = useSelector(currentUserSelector);
   const dispatch  = useDispatch();
   const [valueConvert,setValueConvert] = useState(0);
   const [valueResult,setValueResult] = useState(0);
@@ -24,11 +25,12 @@ export default function Sider() {
   const inputFee = useRef();
 //   const isAdmin = true;
   let isAdmin;
-  if(typeAccount == "admin") {
-     isAdmin = true;
+  if(user.isAdmin == 1) {
+    isAdmin = true;
   } else {
-     isAdmin = false;
+    isAdmin = false
   }
+ 
   const  handleUpdateFee = () => {
    dispatch(setFee(inputFee.current.value));
   }

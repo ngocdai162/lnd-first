@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DropdownCustom from "../modules/DropdownCustom";
 import InputSearch from "../modules/InputSearch";
 import { setIsUser } from "../../redux/slice/isUserSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { currentUserSelector} from "../../redux/selectors";
+import { logOut } from "../../redux/apiRequest";
 
 
 export default function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector(currentUserSelector);
+    const accessToken = user?.accessToken;
+    const userName = user?.userName;
+    useEffect(() => {
+        console.log(user);
+    },[])
     // const isAdmin = true;
     const isAdmin  = false;
     const propsDropdown = {
@@ -24,14 +32,39 @@ export default function Header() {
         item2: "Log out"
     }
     const handleLogOut = () => {
-        dispatch(setIsUser(false));
-        navigate('/login');
+            // logOut(dispatch,userName,navigate, accessToken);
+            logOut(dispatch,userName,navigate);
+
+        // navigate('/login');
     }
     return (
         <div className='header'>
             <h1>Dashboards</h1>
-            <div className="header__search">
-                <InputSearch text = "Search"/>
+            <div className="header__menu">
+                <ul>
+                    <li>
+                        <NavLink  
+                         className={({ isActive }) =>
+                         isActive ? "activeClass" : undefined
+                         }
+                        to = "/home/listCryptos">Cryptos</NavLink>
+                    </li>
+                    {user?.isAdmin == 1 && <li>
+                        <NavLink  
+                         className={({ isActive }) =>
+                         isActive ? "activeClass" : undefined
+                         }
+                        to = "/home/">Admin System</NavLink>
+                    </li>}
+                    {user?.isAdmin  == 0 && <li>
+                        <NavLink 
+                         className={({ isActive }) =>
+                         isActive ? "activeClass" : undefined
+                         }
+                        to ="/home/setting">Setting</NavLink>
+                    </li>}
+                    
+                </ul>
             </div>
             {isAdmin ?
               <div className='header__account acount-admin'>
@@ -44,7 +77,7 @@ export default function Header() {
                        <img src="../../images/avt.png"/>
                     </div>
                     <p>Đại</p>
-                    <DropdownCustom propsDropdown = {propsDropdown}/>
+                    <span onClick={handleLogOut}>Log out</span>
                </div>
             }
         </div>
