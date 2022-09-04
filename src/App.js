@@ -62,7 +62,8 @@ function App() {
            {/* Protected Route */}
            <Route element = {<ProtectedRoute/>}>
              <Route path="/home" element=<MainLayout/>>
-                <Route path="" element={ <Admin/>}/>
+                
+                <Route path="" element={user?.isAdmin == 1 ? <Admin/> : <ListCryptos/>}/>
                 {user?.isAdmin == 0 && 
                 <>
                  <Route path='swap' element={<Swap/>}/>
