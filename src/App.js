@@ -35,20 +35,20 @@ function App() {
   const dispatch = useDispatch();
   const isUser = useSelector(isUserSelector);
   const user = useSelector(currentUserSelector);
-  useEffect(() => {
-    console.log(user);
-  },[user])
+  console.log(user);
+ 
  
   // const [isUser, setIsUser] = useState(null);
   // setInterval(()=> {
   //   dispatch(fetchListCrypto())
   // },1000)
 
-
+   
 
   //tạmmmmmmmmmmmm
   useEffect(()=> {
     dispatch(fetchListCrypto())
+
   },[]);
   
     return (
@@ -58,13 +58,13 @@ function App() {
            <Route index path="/" element={<LoginPage/>}/>
            <Route path="/about"  element={<FirstPage/>} />
            <Route path="/register" element = {<Register/>}/>
-           <Route path="/wallet"element = {<Wallet/>}/>
+           {/* <Route path="/wallet"element = {<Wallet/>}/> */}
            {/* Protected Route */}
            <Route element = {<ProtectedRoute/>}>
              <Route path="/home" element=<MainLayout/>>
                 
-                <Route path="" element={user?.isAdmin == 1 ? <Admin/> : <ListCryptos/>}/>
-                {user?.isAdmin == 0 && 
+                <Route path="" element={user?.roleId == 0 ? <Admin/> : <ListCryptos/>}/>
+                {user?.roleId == 1 && 
                 <>
                  <Route path='swap' element={<Swap/>}/>
                  <Route path='setting' element={<UserEdit/>}/>
@@ -72,6 +72,7 @@ function App() {
                 }
                 <Route path = 'listCryptos' element = {<ListCryptos/>}/>
                 <Route path='chart' element={<CoinInfo/>}/>
+                <Route path="wallet" element = {<Wallet/>}/>
              </Route>
            </Route>
           <Route path='*' element={<ErrorPage/>}/>

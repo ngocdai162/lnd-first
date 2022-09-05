@@ -16,10 +16,6 @@ export default function Header() {
     const user = useSelector(currentUserSelector);
     const accessToken = user?.accessToken;
     const userName = user?.userName;
-    useEffect(() => {
-        console.log(user);
-    },[])
-    // const isAdmin = true;
     const isAdmin  = false;
     const propsDropdown = {
         event1 : () => {
@@ -49,19 +45,26 @@ export default function Header() {
                          }
                         to = "/home/listCryptos">Cryptos</NavLink>
                     </li>
-                    {user?.isAdmin == 1 && <li>
+                    {user?.roleId == 0 && <li>
                         <NavLink  
                          className={({ isActive }) =>
                          isActive ? "activeClass" : undefined
                          }
                         to = "/home/">Admin System</NavLink>
                     </li>}
-                    {user?.isAdmin  == 0 && <li>
+                    {user?.roleId  == 1 && <li>
                         <NavLink 
                          className={({ isActive }) =>
                          isActive ? "activeClass" : undefined
                          }
                         to ="/home/setting">Setting</NavLink>
+                    </li>}
+                    {user?.roleId  == 1 && <li>
+                        <NavLink 
+                         className={({ isActive }) =>
+                         isActive ? "activeClass" : undefined
+                         }
+                        to ="/home/wallet">Wallet</NavLink>
                     </li>}
                     
                 </ul>

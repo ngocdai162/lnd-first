@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { currentUserSelector, isErrorLoginSelector, isUserSelector } from "../redux/selectors";
 import { useEffect } from "react";
 import { account } from "../config/data";
-import { loginUser } from "../redux/apiRequest";
+import { loginUser, registerUser } from "../redux/apiRequest";
 
 // password: "dddddd"
 // remember: true
@@ -38,10 +38,6 @@ export default function LoginPage() {
     const [forgotFlag,setForgotFlag] = useState(0);
     const handleForgot = () => {
       setForgotFlag(1);
-    }
-    const handleLogin = () => {
-      // navigate('/home/listCryptos'); 
-
     }
     return(
      <>
@@ -140,7 +136,7 @@ export default function LoginPage() {
         </Form.Item>
   
         <Form.Item>
-            <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleLogin}>
+            <Button type="primary" htmlType="submit" className="login-form-button">
               Log in
              </Button>
           

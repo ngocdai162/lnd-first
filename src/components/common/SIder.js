@@ -15,17 +15,14 @@ export default function Sider() {
   const [valueConvert,setValueConvert] = useState(0);
   const [valueResult,setValueResult] = useState(0);
   const [errorValue,setErrorValue] = useState(false);
-//   const [isAdmin,setIsAdmin] = useState(false);
   const usd= useSelector(usdSelector);
   const lnd = useSelector(lndSelector);
   const fee = useSelector(feeProject);
   const profit = useSelector(profitProject);
   const typeAccount = useSelector(typeAccountSelector);
-//   console.log(typeAccount);
   const inputFee = useRef();
-//   const isAdmin = true;
   let isAdmin;
-  if(user.isAdmin == 1) {
+  if(user.roleId == 0) {
     isAdmin = true;
   } else {
     isAdmin = false

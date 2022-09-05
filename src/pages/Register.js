@@ -10,6 +10,7 @@ import UploadImage from "../components/modules/UploadImage";
 import isUserSlice, { register, setIsUser } from "../redux/slice/isUserSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom'; //chuyển hương trang
+import { registerUser } from "../redux/apiRequest";
 
 
 
@@ -19,12 +20,14 @@ export default function Register() {
     const [newUser,setNewUser] = useState({});
     const [saveFlag,setSaveFlag] = useState(false);
     const [name,setName] = useState(false);
+    const [fullName,setFullName] = useState(false);
     const [mail,setMail] = useState(false);
     const [avatar,setAvatar] = useState(false);
     const [pass,setPass] = useState(false);
     const [passConfirm,setPassConfirm] = useState(false);
     const [passFlag,setPassFlag] = useState(false);
     const nameInputFail = useRef();
+    const fullNameInputFail = useRef();
     const avatarInputFail= useRef();
     const mailInputFail = useRef();
     const passInputFail = useRef();
@@ -49,6 +52,9 @@ export default function Register() {
     const nameOnChange = (e) => {
       setName(e.target.value);
       console.log(name);
+    }
+    const fullNameOnChange = (e) => {
+      setFullName(e.target.value);
     }
     const mailOnChange = (e) => {
       setMail(e.target.value);
@@ -149,6 +155,11 @@ export default function Register() {
           setNameError('Must be 4 character or more');
           nameInputFail.current.classList.remove('none');
      }
+     if(fullName =='') {
+     fullNameInputFail.current.classList.remove('none');
+    } else {
+      fullNameInputFail.current.classList.add('none');
+    }
 
      if((mail =='') || (validateEmail(mail) == false)) {
         mailInputFail.current.classList.remove('none');
@@ -179,17 +190,25 @@ export default function Register() {
       setNewUser({
         id: uuidv4(),
         name: name,
+        fullName: fullName,
         mail: mail,
         avatar: avatar,
         pass: pass
      })
+     console.log(newUser)
       // dispatch(.....(newUser)) dispatch create 
-      navigate('/listCryptos');   
-       dispatch(setIsUser(true));
+      const userRegister = {
+        userId: newUser.id,
+        email: newUser.mail,
+        passWord: newUser.pass,
+        userName: newUser.name,
+        imgSrc: newUser.avatar,
+        fullName: newUser.fullName
+      }
+      registerUser(userRegister, dispatch,navigate);
      }
    }
-   
-   console.log(newUser);
+ 
     return(
       <div className="p-register">
         <div className="p-register__block">
@@ -203,9 +222,14 @@ export default function Register() {
                    <div className="p-register__block__right__tabs__form">
                      <div className="p-register__block__right__tabs__form__content">
                         <div className="p-register__block__right__tabs__form__content__item">
-                          <p>Name</p>
+                          <p>User Name</p>
                           <input onChange={nameOnChange}/>
                           <span class="none" ref={nameInputFail}>{nameError}</span>
+                        </div>
+                        <div className="p-register__block__right__tabs__form__content__item">
+                          <p>Full name</p>
+                          <input onChange={fullNameOnChange}/>
+                          <span class="none" ref={fullNameInputFail}>Please input your full name!</span>
                         </div>
                         <div className="p-register__block__right__tabs__form__content__item">
                           <p>Mail</p>
