@@ -11,6 +11,7 @@ import coinChartReducer from "./slice/coinChartSlice";
 import authReducer from "./slice/authSlice";
 import tempReducer from "./slice/tempSlice";
 import projectReducer from "./slice/projectSlice";
+import feeReducer from "./slice/feeSlice";
 import {
     persistStore,
     persistReducer,
@@ -39,9 +40,15 @@ const rootReducer = combineReducers({
     coinChart: coinChartReducer,
     temp : tempReducer,
     project: projectReducer,
-    auth: authReducer
+    auth: authReducer,
+    fee: feeReducer
 });
+
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+console.log("root reducer nè")
+console.log(rootReducer);
+
 export const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>

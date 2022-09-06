@@ -1,23 +1,23 @@
 import React, { useState , useRef,useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userSelector } from "../../redux/selectors";
+import { currentUserSelector, userSelector } from "../../redux/selectors";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Avatar from 'react-avatar-edit';
+import { updateUser } from "../../redux/apiRequest";
 const UserEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user  = useSelector(userSelector);
-  console.log(user);
-
+  const inputName = useRef();
+  const user = useSelector(currentUserSelector);
   // formik validate
   const formik = useFormik({
     initialValues: {
       name:"",
       password: "",
       confirmPassword: "",
-      avt:""
+      // avt:""
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -29,16 +29,23 @@ const UserEdit = () => {
       confirmPassword: Yup.string()
           .required("Required")
           .oneOf([Yup.ref("password"),null],"Password must match"),
-      avt : Yup.string()
-          .required("Required")
+      // avt : Yup.string()
+      //     .required("Required")
     }),
     onSubmit: (values) => {
-      //userUPdate = values   dispatch update 
-      console.log(values);
-      navigate('/home/listCryptos');
+      updateUser(user.userId,{
+        userName:  formik.values.name,
+        newPassWord: formik.values.password
+      }, dispatch)
+      // navigate('/home/listCryptos');
     }
   })
-  
+  useEffect(()=> {
+    if(formik.values.name ===undefined) {
+      formik.values.name = user.userName;
+      console.log("setlai")
+    }
+  },[])
     //xử lý lấy avatar
     const [src,setSrc] = useState(null);
     const [preview, setPreview] = useState(null);
@@ -62,7 +69,7 @@ const UserEdit = () => {
        <div className='user-edit__content'>
           <div className="user-edit__content__left">
             <form onSubmit={formik.handleSubmit}>
-              <label>Name</label>
+              <label>Username</label>
               <input
                  className="primary-input"
                  type='text'

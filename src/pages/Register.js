@@ -187,7 +187,8 @@ export default function Register() {
 
     if(name && mail && avatar && passFlag) {
       console.log("ok roi nay");
-      setNewUser({
+
+     console.log({
         id: uuidv4(),
         name: name,
         fullName: fullName,
@@ -195,17 +196,17 @@ export default function Register() {
         avatar: avatar,
         pass: pass
      })
-     console.log(newUser)
+   
       // dispatch(.....(newUser)) dispatch create 
-      const userRegister = {
-        userId: newUser.id,
-        email: newUser.mail,
-        passWord: newUser.pass,
-        userName: newUser.name,
-        imgSrc: newUser.avatar,
-        fullName: newUser.fullName
-      }
-      registerUser(userRegister, dispatch,navigate);
+    
+      registerUser({
+        userId: uuidv4(),
+        email: mail,
+        passWord: pass,
+        userName: name,
+        imgSrc:  avatar,
+        fullName:fullName,
+      }, dispatch,navigate);
      }
    }
  

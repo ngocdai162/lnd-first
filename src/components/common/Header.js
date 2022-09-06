@@ -9,11 +9,20 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { currentUserSelector} from "../../redux/selectors";
 import { logOut } from "../../redux/apiRequest";
 
-
+// accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRob25nIiwiaWF0IjoxNjYyNDYwNDI3fQ.sn2ubYPTuMop14Y8sZVBshtTZxKCGWaNT0uELpLeULc"
+// email: "thong@gmail.com"
+// fullName: "minh thong"
+// isDeleted: false
+// imgSrc
+// passWord: "$2b$10$VO3P/zi6.Ue/Iy6tZJMJI.GKt/dy.dQWYpPq0GGjGJcZki.5zUmT."
+// roleId: 1
+// userId: "69709f40-6bfa-449d-b7bc-2b0872214d34"
+// userName: "thong"
 export default function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(currentUserSelector);
+    console.log(user);
     const accessToken = user?.accessToken;
     const userName = user?.userName;
     const isAdmin  = false;
@@ -69,7 +78,7 @@ export default function Header() {
                     
                 </ul>
             </div>
-            {isAdmin ?
+            {user.roleId == 0 ?
               <div className='header__account acount-admin'>
                 <Avatar size={48} icon={<UserOutlined />} />
                 <p>Admin</p>
@@ -79,7 +88,7 @@ export default function Header() {
                     <div className="header__account__img">
                        <img src="../../images/avt.png"/>
                     </div>
-                    <p>Đại</p>
+                    <p>{user.fullName}</p>
                     <span onClick={handleLogOut}>Log out</span>
                </div>
             }

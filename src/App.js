@@ -27,6 +27,7 @@ import ErrorPage from './pages/ErrorPage';
 import MainLayout from './components/layout/MainLayout';
 import Admin from './components/container/Admin';
 import ProtectedRoute from './components/layout/ProtectedRoute';
+import { fetchFee } from './redux/slice/feeSlice';
 // import {fetchListCrypto} from './redux/slice/listCryptoSlice'
 //Api Coin
 //https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false
@@ -35,21 +36,19 @@ function App() {
   const dispatch = useDispatch();
   const isUser = useSelector(isUserSelector);
   const user = useSelector(currentUserSelector);
-  console.log(user);
  
  
   // const [isUser, setIsUser] = useState(null);
   // setInterval(()=> {
   //   dispatch(fetchListCrypto())
   // },1000)
-
    
 
   //tạmmmmmmmmmmmm
   useEffect(()=> {
     dispatch(fetchListCrypto())
-
   },[]);
+
   
     return (
      <Router>

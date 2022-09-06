@@ -4,10 +4,12 @@ import CryptoLogo from "../modules/modules__container/CryptoLogo";
 import { Modal } from 'antd';
 import {ArrowRightOutlined} from '@ant-design/icons';
 import InputCustom from '../modules/InputCustom';
-import { usdSelector ,lndSelector, feeProject, profitProject, currentUserSelector } from '../../redux/selectors';
+import { usdSelector ,lndSelector, feeProject, profitProject, currentUserSelector, feeSelector } from '../../redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFee } from '../../redux/slice/projectSlice';
 import { typeAccountSelector } from '../../redux/selectors';
+import { disableFee, getFee, upDateFee } from '../../redux/apiRequest';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Sider() {
   const user = useSelector(currentUserSelector);
@@ -17,19 +19,34 @@ export default function Sider() {
   const [errorValue,setErrorValue] = useState(false);
   const usd= useSelector(usdSelector);
   const lnd = useSelector(lndSelector);
-  const fee = useSelector(feeProject);
+  const fee = useSelector(feeSelector);
   const profit = useSelector(profitProject);
   const typeAccount = useSelector(typeAccountSelector);
   const inputFee = useRef();
+  useEffect(() => {
+    getFee(dispatch);
+  },[user])
   let isAdmin;
   if(user.roleId == 0) {
     isAdmin = true;
   } else {
     isAdmin = false
   }
- 
-  const  handleUpdateFee = () => {
-   dispatch(setFee(inputFee.current.value));
+  console.log("render");
+  const  handleUpdateFee = async() => {
+    let newFee = {
+        tradingFeeId: uuidv4(),
+        fee: inputFee.current.value,
+        createdDate : "2002-02-09 00:00:00",  // test tạm
+        isUse  : 1
+    }
+    if( newFee.fee && newFee.fee!=null) {
+      await disableFee(dispatch);
+      await upDateFee(newFee,dispatch)
+      getFee(dispatch);
+      // await dispatch(setFee(inputFee.current.value));
+      // await dispatch(fetchFee());
+    }
   }
 //   const profit = '5214123';
 //   const fee = '23'
