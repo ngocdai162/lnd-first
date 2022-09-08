@@ -22,7 +22,6 @@ export default function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(currentUserSelector);
-    console.log(user);
     const accessToken = user?.accessToken;
     const userName = user?.userName;
     const isAdmin  = false;

@@ -1,18 +1,4 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-// export const fetchFeeProject = createAsyncThunk('data,getdatas', async () => {
-//     return fetch('api get fee').then ((res) =>
-//     // return fetch('api get fee and profit').then ((res) =>
-//      res.json()
-//     )
-// })
-// export const fetchProfitProject = createAsyncThunk('data,getdatas', async () => {
-//     return fetch('api get profit').then ((res) =>
-//     // return fetch('api get fee and profit').then ((res) =>
-//      res.json()
-//     )
-// })
-// createAsyncThunk set fee
-// createAsyncThunk plus profit
 const projectSlice = createSlice({
     name: 'lndCoin',
     initialState: {

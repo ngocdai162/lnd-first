@@ -10,19 +10,19 @@ import { fetchListCrypto } from "../../redux/slice/listCryptoSlice";
 import { swapToLND } from "../../redux/slice/coinSwapSlice";
 import { getCoinChart } from "../../redux/slice/coinChartSlice";
 export default function ListCryptos() {
-  console.log("listCrypto");
     const user = useSelector(currentUserSelector);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const  dataApi  = useSelector(listCryptoSelector) ;
     const [totalPages,setTotalPages] = useState(0);
-    const moreItems = ["Edit","Infomation","Analytics","Whilelist","Remaining","Allocation"];
+    useEffect(()=> {
+      dispatch(fetchListCrypto())
+    },[]);
     const handleClickSwap = (e) => {
       if(e.target.querySelector('input')!=null) {
         let coinSwap = dataApi.find((item)=> {
           return item.id == e.target.querySelector('input').value;
         })
-        // console.log(coinSwap)
         dispatch(swapToLND(coinSwap));
         navigate('/home/swap');
       }
@@ -31,7 +31,6 @@ export default function ListCryptos() {
       let coinSwap = dataApi.find((item)=> {
         return item.id ==  id;
       })
-      // console.log(coinSwap)
       dispatch(swapToLND(coinSwap));
       navigate('/home/swap');
     }

@@ -8,22 +8,9 @@ const feeSlice = createSlice({
     },
     reducers: {
         getFeeSuccess: (state,action) => {
-            console.log(action.payload);
             state.fee = action.payload.Fee;
-            console.log(state.fee)
         },
     },
-    // extraReducers : {
-    //     [fetchFee.fulfilled]: (state, action) => {
-    //         console.log("coi ne");
-    //         if(typeof(action.payload) ==="object") {
-    //             console.log(action.payload)
-    //             state.fee = action.payload.Fee;
-    //             console.log(state.fee)
-    //         }
-    //     }
-    // }
 })
-// export const {setIsUser} = isUserSlice.actions;
 export const {getFeeSuccess} = feeSlice.actions;
 export default feeSlice.reducer;

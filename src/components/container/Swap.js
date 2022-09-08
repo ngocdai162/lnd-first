@@ -3,19 +3,48 @@ import ButtonCustom from "../modules/ButtonCustom";
 import CryptoLogo from "../modules/modules__container/CryptoLogo";
 import {SwapOutlined} from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
-import { coinSwapSelector, feeSelector, lndMarketCapSelector, lndSelector, walletSelector } from "../../redux/selectors";
+import { coinSwapSelector, currentUserSelector, feeSelector, lndApiSelector, lndMarketCapSelector, lndSelector, walletSelector } from "../../redux/selectors";
 import { useNavigate } from "react-router-dom";
 import { addCoin, updateCoin } from "../../redux/slice/walletSlice";
 import { plusMarketCap } from "../../redux/slice/lndMarketCapSlice";
+import { getWallet } from "../../redux/apiRequest";
 
 const Swap = () => {
+  const lndApi = useSelector(lndApiSelector);
+  const user = useSelector(currentUserSelector);
+  const wallet= useSelector(walletSelector); 
   const marketCap = useSelector(lndMarketCapSelector);
+  const [lndWallet,setLndWallet] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const lnd = useSelector((state) => state.wallet.collection.find(item => item.id=="lnd")); //lnd
+  console.log(wallet)
+  useEffect(() => {
+    getWallet(dispatch,user.userId);
+    
+  },[])
+  let tempLnd = wallet.filter((item) => {
+    if(item.coinId =="lnd") return true
+  });
+  console.log(tempLnd)
+  setLndWallet(tempLnd[0])
+  console.log(tempLnd[0]);
+
+
+  // const lndWallet = useSelector((state) => state.wallet.collection.find(item => item.id=="lnd")); //lnd
+  console.log(lndWallet);
   const coinSwapFromList = useSelector(coinSwapSelector); // coin swap láy từ listCrypto
   const coinSwapFromWallet = useSelector((state) => state.wallet.collection.find(item => item.id==coinSwapFromList.id));
   // const [coinSwap,setCoinSwap] = useState(coinSwapFromWallet); //coinSwap
+  const lnd = {
+    id: lndWallet.id,
+    coin: lndWallet.coin,
+    imgSrc: lndWallet.imgSrc,
+    price: lndApi.price,
+    amount:lndWallet.amount
+  }
+
+
+  // k sửa 
   var coinSwap;  
   if(coinSwapFromWallet!=undefined) {
     let temp = {amount: coinSwapFromWallet.amount};
@@ -26,11 +55,6 @@ const Swap = () => {
   }
   // Đã có được lnd và coinSwap
   const [rootCoin,setRootCoin] = useState(lnd)   // coin gốc
-  console.log("lnd Coin");
-  console.log(rootCoin)
-  // useEffect(()=> {
-  //   setRootCoin(lnd);
-  // },[])
   const [destinationCoin ,setDestinationCoin]= useState(coinSwap); // coin đích
   const [toLnd,setToLnd] = useState(false);  // flag check chiều swap
   const [valueSwap,setValueSwap] = useState(0);
@@ -57,8 +81,7 @@ const Swap = () => {
   const handleChangeSwap = (e) => {   //nhận value Swap
     setValueSwap(e.target.value);
   }
-  console.log('amount');
-  console.log(lnd.amount);
+  console.log(lnd);
   useEffect(()=>{       // kiểm tra value swap, trả result
     if(isNaN(valueSwap) || valueSwap<=0) {
      setErrorValue(true);

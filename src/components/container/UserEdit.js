@@ -9,7 +9,6 @@ import { updateUser } from "../../redux/apiRequest";
 const UserEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const inputName = useRef();
   const user = useSelector(currentUserSelector);
   // formik validate
   const formik = useFormik({
@@ -41,11 +40,10 @@ const UserEdit = () => {
     }
   })
   useEffect(()=> {
-    if(formik.values.name ===undefined) {
+    if(formik.values.name === undefined) {
       formik.values.name = user.userName;
-      console.log("setlai")
     }
-  },[])
+  },[formik.values.name])
     //xử lý lấy avatar
     const [src,setSrc] = useState(null);
     const [preview, setPreview] = useState(null);
@@ -75,7 +73,7 @@ const UserEdit = () => {
                  type='text'
                  id='name'
                  name='name'
-                 value={formik.values.name}
+                 value={(formik.values.name===undefined) ? user.userName : formik.values.name}
                  onChange={formik.handleChange}
                  placeholder="Enter your name"
               />

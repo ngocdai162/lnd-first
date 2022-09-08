@@ -12,6 +12,8 @@ import authReducer from "./slice/authSlice";
 import tempReducer from "./slice/tempSlice";
 import projectReducer from "./slice/projectSlice";
 import feeReducer from "./slice/feeSlice";
+import lndApiReducer from "./slice/lndApiSlice";
+import coinReducer from "./slice/coinSlice";
 import {
     persistStore,
     persistReducer,
@@ -41,13 +43,13 @@ const rootReducer = combineReducers({
     temp : tempReducer,
     project: projectReducer,
     auth: authReducer,
-    fee: feeReducer
+    fee: feeReducer,
+    lndApi: lndApiReducer,
+    coin: coinReducer
 });
 
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-console.log("root reducer nè")
-console.log(rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,

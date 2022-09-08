@@ -5,8 +5,6 @@ import Footer from '../common/Footer';
 import Sider from '../common/Sider';
 import { Outlet } from 'react-router-dom';
 const MainLayout = () => {
- console.log("render");
-
     return (
         <div className='l-app'>
             <Sider/>

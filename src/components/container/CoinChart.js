@@ -24,20 +24,14 @@ const MainChart = styled.div`
       padding: 40;
 `
 
-const CoinChart = () => {
+const CoinChart = (props) => {
   const dispatch = useDispatch();
-  const coin = useSelector(coinChartSelector) ;
-  // useEffect(()=> {
-
-  // })
-
   const [historicData, setHistoricData] = useState();
   const [days, setDays] = useState(1);
   const [currency,setCurrency]   = useState('usd');
   const [flag,setflag] = useState(false);
   const fetchHistoricData = async () => {
-    const { data } = await axios.get(HistoricalChart(coin.id, days, currency));
-
+    const { data } = await axios.get(HistoricalChart(props.coinId, days, currency));
     setflag(true);
     setHistoricData(data.prices);
   };
@@ -45,7 +39,7 @@ const CoinChart = () => {
   useEffect(() => {
     fetchHistoricData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [days]);
+  }, [days,props.coinId]);
 
   const darkTheme = createTheme({
     palette: {

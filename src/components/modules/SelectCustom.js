@@ -24,7 +24,7 @@ export default function SelectCustom (props) {
         className="select__block"
       >
         {listItem.map((item,index) => 
-            <Option value= {item.coin} key = {index}>{item.coin}</Option>
+            <Option value= {item.coinId} key = {index}>{item.coinId}</Option>
         )}
 
     </Select>

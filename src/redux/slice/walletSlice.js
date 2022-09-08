@@ -2,32 +2,19 @@ import {bindActionCreators, createSlice} from "@reduxjs/toolkit";
 const walletSlice = createSlice({
     name: 'wallet',
     initialState: {
-        collection : [
-            {   
-                id: 'usd',
-                coin: "USD",
-                imgSrc: '',
-                price: 1,
-                amount: 120
-            },
-            {   
-                id: 'lnd',
-                coin: "LND",
-                imgSrc: '../images/lnd-logo.png',
-                price: 15,
-                amount: 30
-            },
-            {
-                id: 'bitcoin',
-                coin: "Bitcoin",
-                imgSrc: '',
-                price: 15,
-                amount: 30
-            }
-        ],
-        status: "",
+        collection : [],
+        idAcive: "",
     },
     reducers: {
+        // Lấy toàn bộ coin trong ví
+        getCoins(state,action) {
+            console.log("get get get")
+          state.collection = action.payload;
+        },
+
+        setIdActive(state,action) {
+            state.idAcive = action.payload;
+        },
         //lay mot luong usd ngau nhien khi dang ky
         getUSD(state,action) {  
             state.collection.coin = "USD";
@@ -50,5 +37,5 @@ const walletSlice = createSlice({
         }
     }
 })
-export const {getUSD, addCoin,updateCoin} =  walletSlice.actions;
+export const {setIdActive,getUSD,addCoin,updateCoin,getCoins} =  walletSlice.actions;
 export default walletSlice.reducer;

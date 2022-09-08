@@ -12,6 +12,7 @@ const CoinInfo = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const coin = useSelector(coinChartSelector);
+
     if(coin.id=="") {
         navigate('*');
     }
@@ -45,7 +46,7 @@ const CoinInfo = () => {
               <ButtonCustom text="Swap" event = {handleSwap}/>
             </div>
             <div className="coin-info__chart">
-                <CoinChart/>
+                <CoinChart id ={coin.id}/>
             </div>
         </div>
     )

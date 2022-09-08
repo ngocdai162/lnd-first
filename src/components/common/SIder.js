@@ -4,19 +4,22 @@ import CryptoLogo from "../modules/modules__container/CryptoLogo";
 import { Modal } from 'antd';
 import {ArrowRightOutlined} from '@ant-design/icons';
 import InputCustom from '../modules/InputCustom';
-import { usdSelector ,lndSelector, feeProject, profitProject, currentUserSelector, feeSelector } from '../../redux/selectors';
+import { usdSelector ,lndSelector, profitProject, currentUserSelector, feeSelector, tempSelector, lndApiSelector, walletSelector } from '../../redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFee } from '../../redux/slice/projectSlice';
 import { typeAccountSelector } from '../../redux/selectors';
-import { disableFee, getFee, upDateFee } from '../../redux/apiRequest';
+import { disableFee, getFee, getLnd, getWallet, upDateFee } from '../../redux/apiRequest';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Sider() {
-  const user = useSelector(currentUserSelector);
   const dispatch  = useDispatch();
+  const wallet= useSelector(walletSelector); 
+  const user = useSelector(currentUserSelector);
+  const lndApi = useSelector(lndApiSelector);
   const [valueConvert,setValueConvert] = useState(0);
   const [valueResult,setValueResult] = useState(0);
   const [errorValue,setErrorValue] = useState(false);
+  const [lndWallet,setLndWallet] = useState();
+  const [usdWallet,setUsdWallet] = useState();
   const usd= useSelector(usdSelector);
   const lnd = useSelector(lndSelector);
   const fee = useSelector(feeSelector);
@@ -25,14 +28,23 @@ export default function Sider() {
   const inputFee = useRef();
   useEffect(() => {
     getFee(dispatch);
+    getWallet(dispatch,user.userId);
+    let tempLnd = wallet.filter((item) => {
+      if(item.coinId =="lnd") return true
+    });
+    setLndWallet(tempLnd[0])
+    let tempUsd = wallet.filter((item) => {
+      if(item.coinId =="usd") return true
+    });
+    setUsdWallet(tempUsd[0])
   },[user])
+
   let isAdmin;
   if(user.roleId == 0) {
     isAdmin = true;
   } else {
     isAdmin = false
   }
-  console.log("render");
   const  handleUpdateFee = async() => {
     let newFee = {
         tradingFeeId: uuidv4(),
@@ -44,16 +56,7 @@ export default function Sider() {
       await disableFee(dispatch);
       await upDateFee(newFee,dispatch)
       getFee(dispatch);
-      // await dispatch(setFee(inputFee.current.value));
-      // await dispatch(fetchFee());
     }
-  }
-//   const profit = '5214123';
-//   const fee = '23'
-  const lndCoin = {
-      rank: '24',
-      marketCap: '1241234',
-      price: '14312',
   }
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
@@ -73,7 +76,7 @@ export default function Sider() {
   if(isNaN(valueConvert) || (valueConvert > usd.amount) ) {
    setErrorValue(true);
   } else {
-   setValueResult(valueConvert/lnd.price);
+   setValueResult(valueConvert/lndApi.price);
    setErrorValue(false);
   }
  },[valueConvert])
@@ -88,9 +91,9 @@ export default function Sider() {
          <div className="sider-main__info">
             <CryptoLogo srcImg='../../images/lnd-logo.png'/>
             <h1>LND-COIN</h1>
-            <p>Rank: <span>{lndCoin.rank}</span></p>
-            <p>Market Cap: <span>{lndCoin.marketCap}</span></p>
-            <p>Current Price (USD) : <span>{lndCoin.price}</span> </p>
+            <p>Rank: <span>{lndApi.rank}</span></p>
+            <p>Market Cap: <span>{lndApi.marketCap}</span></p>
+            <p>Current Price (USD) : <span>{lndApi.price}</span> </p>
             {isAdmin && <h2>Profit: <span>{profit}</span></h2>}
          </div>
          {isAdmin ?  
@@ -110,7 +113,7 @@ export default function Sider() {
                 <div className='wallet-item__title wallet-usd__title'>
                   <CryptoLogo srcImg='../images/cryptoLogo/bitcoin-btc-logo.png'/>
                   <p>USD</p>
-                  <span>Exits: {usd.amount}</span>
+                  <span>Exits: {usdWallet?.quantity}</span>
                 </div>
                 <div className="wallet-item__input">
                   <InputCustom placeholder="Convert to LND-COIN" event={handleChangeConvert}/>
@@ -122,8 +125,8 @@ export default function Sider() {
                 <div className='wallet-item__title wallet-lnd__title'>
                   <CryptoLogo srcImg='../images/lnd-logo.png'/>
                   <p>LND</p> 
-                  <p>Price: {lnd.price}USD</p>
-                  <span>Exits: {lnd.amount}</span>
+                  <p>Price: {lndApi.price} USD</p>
+                  <span>Exits: {lndWallet?.quantity}</span>
                 </div>
                 <p className='result'>Result : {valueResult} LND</p>
               </div>

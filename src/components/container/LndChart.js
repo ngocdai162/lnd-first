@@ -26,14 +26,9 @@ const MainChart = styled.div`
 
 const LndChart = () => {
   const dispatch = useDispatch();
-//   const coin = useSelector(coinChartSelector) ;
   const coin = {
     id: "bitcoin"
   }
-  // useEffect(()=> {
-
-  // })
-
   const [historicData, setHistoricData] = useState();
   const [days, setDays] = useState(1);
   const [currency,setCurrency]   = useState('usd');
