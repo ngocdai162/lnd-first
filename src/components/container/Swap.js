@@ -13,34 +13,29 @@ const Swap = () => {
   const lndApi = useSelector(lndApiSelector);
   const user = useSelector(currentUserSelector);
   const wallet= useSelector(walletSelector); 
-  const marketCap = useSelector(lndMarketCapSelector);
-  const [lndWallet,setLndWallet] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   console.log(wallet)
   useEffect(() => {
     getWallet(dispatch,user.userId);
-    
   },[])
-  let tempLnd = wallet.filter((item) => {
+  const lndWallet = wallet.filter((item) => {
     if(item.coinId =="lnd") return true
   });
-  console.log(tempLnd)
-  setLndWallet(tempLnd[0])
-  console.log(tempLnd[0]);
+  
 
 
   // const lndWallet = useSelector((state) => state.wallet.collection.find(item => item.id=="lnd")); //lnd
   console.log(lndWallet);
   const coinSwapFromList = useSelector(coinSwapSelector); // coin swap láy từ listCrypto
-  const coinSwapFromWallet = useSelector((state) => state.wallet.collection.find(item => item.id==coinSwapFromList.id));
+  const coinSwapFromWallet = useSelector((state) => state.wallet.collection.find(item => item.coinId==coinSwapFromList.id));
   // const [coinSwap,setCoinSwap] = useState(coinSwapFromWallet); //coinSwap
   const lnd = {
-    id: lndWallet.id,
-    coin: lndWallet.coin,
-    imgSrc: lndWallet.imgSrc,
+    id: lndWallet[0].coinId,
+    coin: "LND",
+    imgSrc: "../../images/lnd-logo.png",
     price: lndApi.price,
-    amount:lndWallet.amount
+    amount:lndWallet[0].quantity
   }
 
 

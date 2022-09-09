@@ -10,7 +10,7 @@ import UploadImage from "../components/modules/UploadImage";
 import isUserSlice, { register, setIsUser } from "../redux/slice/isUserSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom'; //chuyển hương trang
-import { registerUser } from "../redux/apiRequest";
+import { addToWallet, createWallet, registerUser } from "../redux/apiRequest";
 
 
 
@@ -146,7 +146,7 @@ export default function Register() {
     },preview)
 
    const [nameError,setNameError] = useState("");
-   const handleSave = () => {
+   const handleSave = async() => {
      if(name =='')  {
        setNameError('Required');
        nameInputFail.current.classList.remove('none');
@@ -184,29 +184,31 @@ export default function Register() {
     } else {
       passConfirmInputFail.current.classList.add('none');
      }
-
+    const userId = uuidv4();
     if(name && mail && avatar && passFlag) {
-      console.log("ok roi nay");
-
-     console.log({
-        id: uuidv4(),
+       console.log("ok roi nay");
+       console.log({
+        id:  userId,
         name: name,
         fullName: fullName,
         mail: mail,
         avatar: avatar,
         pass: pass
      })
-   
-      // dispatch(.....(newUser)) dispatch create 
-    
-      registerUser({
-        userId: uuidv4(),
+      await registerUser({
+        userId: userId,
         email: mail,
         passWord: pass,
         userName: name,
         imgSrc:  avatar,
         fullName:fullName,
-      }, dispatch,navigate);
+      }, dispatch,navigate);  //coinId, userId, quantity
+      await createWallet(dispatch,{userId: userId})
+      await addToWallet(dispatch,{
+        coinId  : "usd",
+        userId: userId,
+        quantity:  Math.floor(Math.random() * 100)
+      })
      }
    }
  

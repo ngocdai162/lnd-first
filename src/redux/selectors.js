@@ -4,7 +4,7 @@ export const typeAccountSelector = (state) => state.isUser.type;
 export const listCryptoSelector = (state) => state.listCrypto.data;
 export const walletSelector = (state) => state.wallet.collection;
 export const walletIdCoinActive = (state) => state.wallet.idActive;
-export const usdSelector = (state) => state.wallet.collection[0];
+// export const usdSelector = (state) => state.wallet.collection[0];
 export const lndSelector = (state) => state.lndCoin;
 export const coinSwapSelector = (state) => state.coinSwap;
 export const lndApiSelector = (state) => state.lndApi;

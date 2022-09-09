@@ -11,30 +11,36 @@ import { getCoin, getWallet } from "../../redux/apiRequest";
 const Wallet = () => {
    const dispatch = useDispatch();
   const user = useSelector(currentUserSelector);
-   const listItem = useSelector(walletSelector);
+   const wallet = useSelector(walletSelector);
+   const [listItem,setListIten] = useState([{
+    // coinId:""
+   }])
    const coinApi = useSelector(coinSelector);
    const [activeKey,setActiveKey] = useState(0)
-   const [idCoinActive,setIdCoinActive] = useState(listItem[0].coinId);
+   const [idCoinActive,setIdCoinActive] = useState(listItem[0]?.coinId);
    useEffect(()=> {
     if(user?.userId) {
       getWallet(dispatch,user.userId);
     }
+    if(wallet) {
+      setListIten(wallet)
+     }
    },[])
    const getKey = (activeKey) => {
     setActiveKey(activeKey);
    }
    useEffect(()=> {
-        dispatch(setIdActive(listItem[activeKey].coinId))
-        if(listItem[activeKey].coinId=="lnd") {
+        dispatch(setIdActive(listItem[activeKey]?.coinId))
+        if(listItem[activeKey]?.coinId=="lnd") {
           getCoin(dispatch,"uniswap");
         } else
         getCoin(dispatch,listItem[activeKey].coinId);
    },[activeKey])
-  
+  console.log(listItem)
     return (
             <div className="wallet">
               <div className="wallet__container">
-               <div className="wallet__container__content">
+              {listItem[activeKey]?.coinId ? <div className="wallet__container__content">
                   <div className="wallet__container__content__select">
                     <SelectCustom listItem = {listItem} event={getKey} defaultValue= "Select Coin" placeholderSelect = "Select Coin"/>
                   </div>
@@ -43,12 +49,14 @@ const Wallet = () => {
                   </div>
                   {/* <h1>{listItem[activeCoin].coin}</h1> */}
                   <h1>{listItem[activeKey]?.coinId=="lnd" ? "LND" : coinApi.name}</h1>
-                  <p>Amount: {listItem[activeKey].quantity}</p>
+                  <p>Amount: {listItem[activeKey]?.quantity}</p>
                   <span>Price: {coinApi.price}</span>
-               </div>
+               </div> :  <h1 className="wallet-empty">Wallet empty</h1>}
               </div>
              <div className="wallet__chart">
+             {listItem[activeKey]?.coinId &&
                <CoinChart coinId = {listItem[activeKey]?.coinId=="lnd" ? "uniswap" : listItem[activeKey]?.coinId}/>
+             }
              </div>
             </div>
            

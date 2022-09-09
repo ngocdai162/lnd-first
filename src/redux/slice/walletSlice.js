@@ -8,7 +8,6 @@ const walletSlice = createSlice({
     reducers: {
         // Lấy toàn bộ coin trong ví
         getCoins(state,action) {
-            console.log("get get get")
           state.collection = action.payload;
         },
 
@@ -23,7 +22,6 @@ const walletSlice = createSlice({
         //add them coin luc swap
         addCoin(state,action) {
             state.collection.push(action.payload.coinSwap);
-            console.log("id");
             console.log(action.payload.lnd.id);
             const indexLnd = state.collection.findIndex(({id}) => id==action.payload.lnd.id)
             state.collection[indexLnd].amount = state.collection[indexLnd].amount + action.payload.lnd.changeValue;

@@ -4,11 +4,12 @@ import CryptoLogo from "../modules/modules__container/CryptoLogo";
 import { Modal } from 'antd';
 import {ArrowRightOutlined} from '@ant-design/icons';
 import InputCustom from '../modules/InputCustom';
-import { usdSelector ,lndSelector, profitProject, currentUserSelector, feeSelector, tempSelector, lndApiSelector, walletSelector } from '../../redux/selectors';
+import {lndSelector, profitProject, currentUserSelector, feeSelector, tempSelector, lndApiSelector, walletSelector } from '../../redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { typeAccountSelector } from '../../redux/selectors';
-import { disableFee, getFee, getLnd, getWallet, upDateFee } from '../../redux/apiRequest';
+import { addToWallet, checkWallet, disableFee, getFee, getLnd, getWallet, upDateFee, updateWallet } from '../../redux/apiRequest';
 import { v4 as uuidv4 } from 'uuid';
+import { idAdmin } from '../../config/data';
 
 export default function Sider() {
   const dispatch  = useDispatch();
@@ -20,24 +21,44 @@ export default function Sider() {
   const [errorValue,setErrorValue] = useState(false);
   const [lndWallet,setLndWallet] = useState();
   const [usdWallet,setUsdWallet] = useState();
-  const usd= useSelector(usdSelector);
-  const lnd = useSelector(lndSelector);
+  const [lndCheck,setLndCheck] = useState(false);
+  const [refreshWallet,setReFreshWallet] = useState(false);
   const fee = useSelector(feeSelector);
-  const profit = useSelector(profitProject);
-  const typeAccount = useSelector(typeAccountSelector);
+  // const [profit,setProfit] = useState(0);
   const inputFee = useRef();
-  useEffect(() => {
+  //lấy fee, lnd, usd
+  useEffect(()=> {
     getFee(dispatch);
-    getWallet(dispatch,user.userId);
-    let tempLnd = wallet.filter((item) => {
-      if(item.coinId =="lnd") return true
-    });
-    setLndWallet(tempLnd[0])
-    let tempUsd = wallet.filter((item) => {
-      if(item.coinId =="usd") return true
-    });
-    setUsdWallet(tempUsd[0])
-  },[user])
+  },[])
+  const getData = async() => {
+    await getWallet(dispatch,user.userId);
+    if(wallet) {
+      console.log("get wallet")
+      let tempLnd = wallet?.filter((item) => {
+        if(item.coinId =="lnd") return true
+      });
+      setLndWallet(tempLnd[0])
+      let tempUsd = wallet?.filter((item) => {
+        if(item.coinId =="usd") return true
+      });
+      setUsdWallet(tempUsd[0])
+    }
+  }
+  useEffect(() => {
+   getData();
+  },[refreshWallet])
+
+  //CHECK WALLET
+  const temp = async () => {
+      let check = await checkWallet({
+      userId: user.userId,
+      coinId:'lnd'
+      })
+      setLndCheck(check);
+      console.log(lndCheck);
+  }
+  temp();
+
 
   let isAdmin;
   if(user.roleId == 0) {
@@ -58,11 +79,45 @@ export default function Sider() {
       getFee(dispatch);
     }
   }
+  console.log(refreshWallet);
+  console.log(usdWallet?.quantity);
+  //MODAL
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
     setIsModalVisible(true);
   };
-  const handleOk = () => {
+  const handleOk = async() => {
+    if(!lndCheck) {
+      await addToWallet(dispatch,{
+        coinId  : "lnd",
+        userId: user.userId,
+        quantity:  valueResult
+      });
+      await updateWallet({
+        coinId  : "usd",
+        userId: user.userId,
+        quantityAdd:  -valueConvert
+      })
+    } else {
+      await updateWallet({
+        coinId  : "lnd",
+        userId: user.userId,
+        quantityAdd:  valueResult,
+      });
+      await updateWallet({
+        coinId  : "usd",
+        userId: user.userId,
+        quantityAdd:  -valueConvert,
+      })
+    }
+    setReFreshWallet(!refreshWallet);
+    await updateWallet({
+      coinId  : "usd",
+      userId: idAdmin,
+      quantityAdd:  valueConvert
+    })
+    // await setValueResult(0);
+    // await setValueConvert(0);
     setIsModalVisible(false);
   };
   const handleCancel = () => {
@@ -73,7 +128,7 @@ export default function Sider() {
    setValueConvert(e.target.value);
  }
  useEffect(()=>{
-  if(isNaN(valueConvert) || (valueConvert > usd.amount) ) {
+  if(isNaN(valueConvert) || (valueConvert > (usdWallet?.quantity ? usdWallet.quantity : 0)) ) {
    setErrorValue(true);
   } else {
    setValueResult(valueConvert/lndApi.price);
@@ -94,7 +149,7 @@ export default function Sider() {
             <p>Rank: <span>{lndApi.rank}</span></p>
             <p>Market Cap: <span>{lndApi.marketCap}</span></p>
             <p>Current Price (USD) : <span>{lndApi.price}</span> </p>
-            {isAdmin && <h2>Profit: <span>{profit}</span></h2>}
+            {isAdmin && <h2>Profit: <span>{(usdWallet?.quantity)?.toFixed(2)}</span></h2>}
          </div>
          {isAdmin ?  
          <div className="sider-main__action">
@@ -113,7 +168,7 @@ export default function Sider() {
                 <div className='wallet-item__title wallet-usd__title'>
                   <CryptoLogo srcImg='../images/cryptoLogo/bitcoin-btc-logo.png'/>
                   <p>USD</p>
-                  <span>Exits: {usdWallet?.quantity}</span>
+                  <span>Exits: {(usdWallet?.quantity)?.toFixed(2)}</span>
                 </div>
                 <div className="wallet-item__input">
                   <InputCustom placeholder="Convert to LND-COIN" event={handleChangeConvert}/>
@@ -126,7 +181,7 @@ export default function Sider() {
                   <CryptoLogo srcImg='../images/lnd-logo.png'/>
                   <p>LND</p> 
                   <p>Price: {lndApi.price} USD</p>
-                  <span>Exits: {lndWallet?.quantity}</span>
+                  <span>Exits: {(lndWallet?.quantity)?.toFixed(2)}</span>
                 </div>
                 <p className='result'>Result : {valueResult} LND</p>
               </div>

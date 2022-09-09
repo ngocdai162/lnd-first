@@ -1,10 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_LISTCRYPTO } from "../../config/api";
-export const fetchListCrypto = createAsyncThunk('data,getdatas', async () => {
-    return fetch(API_LISTCRYPTO).then ((res) =>
-     res.json()
-    )
-})
 const listCryptoSlice = createSlice({
     name: "listCrypto",
     initialState: {
@@ -12,13 +7,10 @@ const listCryptoSlice = createSlice({
       status: false,
     },
     reducers: {
-       
+       fetchListCrypto(state,action) {
+        state.data = action.payload;
+       }
     },
-    extraReducers : {
-        [fetchListCrypto.fulfilled]: (state, action) => {
-            state.data = action.payload;
-            state.status = true;
-        }
-    }
 })
+export const {fetchListCrypto} = listCryptoSlice.actions
 export default listCryptoSlice.reducer;

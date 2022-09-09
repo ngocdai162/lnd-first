@@ -14,7 +14,7 @@ import Register  from './pages/Register';
 import UserEdit from './components/container/UserEdit';
 import Swap from './components/container/Swap';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { currentUserSelector, isUserSelector, tempSelector } from './redux/selectors';
+import { currentUserSelector, isUserSelector, listCryptoSelector, tempSelector } from './redux/selectors';
 import { setIsUser } from './redux/slice/isUserSlice';
 import Wallet from './components/container/Wallet';
 // import { fetchListCrypto } from './redux/slice/listCryptoSlices';
@@ -29,15 +29,18 @@ import Admin from './components/container/Admin';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import { fetchFee } from './redux/slice/feeSlice';
 import { fetchLndApi } from './redux/slice/lndApiSlice';
-import { getLnd } from './redux/apiRequest';
+import { getListCrypto, getLnd } from './redux/apiRequest';
 // import {fetchListCrypto} from './redux/slice/listCryptoSlice'
 //Api Coin
 //https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false
 
 function App() {
   const dispatch = useDispatch();
+  const isUser = useSelector(isUserSelector);
   const user = useSelector(currentUserSelector);
  
+ 
+  // const [isUser, setIsUser] = useState(null);
   // setInterval(()=> {
   //   dispatch(fetchListCrypto())
   // },1000)
@@ -50,7 +53,7 @@ function App() {
   useEffect(()=> {
     getLnd(dispatch);
   },[])
-  
+  getListCrypto(dispatch);
     return (
      <Router>
         <Routes>

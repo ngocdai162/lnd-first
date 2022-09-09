@@ -11,6 +11,7 @@ export default function SelectCustom (props) {
   };
 
   const listItem = props.listItem;
+
   
   return (
     <div className='select-custom'>
@@ -23,7 +24,7 @@ export default function SelectCustom (props) {
         onChange={handleChange}
         className="select__block"
       >
-        {listItem.map((item,index) => 
+        {listItem?.map((item,index) => 
             <Option value= {item.coinId} key = {index}>{item.coinId}</Option>
         )}
 

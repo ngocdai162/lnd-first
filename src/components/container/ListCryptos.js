@@ -9,6 +9,7 @@ import { currentUserSelector, listCryptoSelector } from "../../redux/selectors";
 import { fetchListCrypto } from "../../redux/slice/listCryptoSlice";
 import { swapToLND } from "../../redux/slice/coinSwapSlice";
 import { getCoinChart } from "../../redux/slice/coinChartSlice";
+import { getListCrypto } from "../../redux/apiRequest";
 export default function ListCryptos() {
     const user = useSelector(currentUserSelector);
     const dispatch = useDispatch();
@@ -16,8 +17,10 @@ export default function ListCryptos() {
     const  dataApi  = useSelector(listCryptoSelector) ;
     const [totalPages,setTotalPages] = useState(0);
     useEffect(()=> {
-      dispatch(fetchListCrypto())
+      // dispatch(fetchListCrypto())
+      // getListCrypto(dispatch)
     },[]);
+  
     const handleClickSwap = (e) => {
       if(e.target.querySelector('input')!=null) {
         let coinSwap = dataApi.find((item)=> {
@@ -103,7 +106,7 @@ export default function ListCryptos() {
         }
     ]
     
-    // {id: 'tether', symbol: 'usdt', name: 'Tether', image: 'https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707', current_price: 1.001, …}
+    // {id: 'tether', symbol: 'usdt', name: 'Tether', image: 'https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707', current_price: 1.001, …}
     
 
     const [data,setData] =useState([]);
