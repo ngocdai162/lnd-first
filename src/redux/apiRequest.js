@@ -136,7 +136,6 @@ export const  checkWallet= async(dataCheck) => {
   var res;
   try {
    res = await axios.post(API_CHECK_WALLET,dataCheck);
-    console.log(res.data.result);
   } catch (err) {
     console.log(err)
   }

@@ -41,6 +41,7 @@ export default function Sider() {
       let tempUsd = wallet?.filter((item) => {
         if(item.coinId =="usd") return true
       });
+      console.log(tempUsd);
       setUsdWallet(tempUsd[0])
     }
   }
@@ -49,16 +50,14 @@ export default function Sider() {
   },[refreshWallet])
 
   //CHECK WALLET
-  const temp = async () => {
+  const handleCheck = async () => {
       let check = await checkWallet({
       userId: user.userId,
       coinId:'lnd'
       })
       setLndCheck(check);
-      console.log(lndCheck);
   }
-  temp();
-
+  handleCheck();
 
   let isAdmin;
   if(user.roleId == 0) {
@@ -79,7 +78,6 @@ export default function Sider() {
       getFee(dispatch);
     }
   }
-  console.log(refreshWallet);
   console.log(usdWallet?.quantity);
   //MODAL
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -110,12 +108,13 @@ export default function Sider() {
         quantityAdd:  -valueConvert,
       })
     }
-    setReFreshWallet(!refreshWallet);
     await updateWallet({
       coinId  : "usd",
       userId: idAdmin,
       quantityAdd:  valueConvert
     })
+    await getData();
+    setReFreshWallet(!refreshWallet);
     // await setValueResult(0);
     // await setValueConvert(0);
     setIsModalVisible(false);

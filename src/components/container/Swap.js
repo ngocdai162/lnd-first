@@ -7,27 +7,34 @@ import { coinSwapSelector, currentUserSelector, feeSelector, lndApiSelector, lnd
 import { useNavigate } from "react-router-dom";
 import { addCoin, updateCoin } from "../../redux/slice/walletSlice";
 import { plusMarketCap } from "../../redux/slice/lndMarketCapSlice";
-import { getWallet } from "../../redux/apiRequest";
+import { addToWallet, checkWallet, getWallet, updateWallet } from "../../redux/apiRequest";
 
 const Swap = () => {
   const lndApi = useSelector(lndApiSelector);
   const user = useSelector(currentUserSelector);
   const wallet= useSelector(walletSelector); 
+  const [checkCoin,setCheckCoin] = useState();
+  const [refreshWallet,setReFreshWallet] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(wallet)
   useEffect(() => {
     getWallet(dispatch,user.userId);
-  },[])
+  },[refreshWallet])
+  console.log(wallet);
   const lndWallet = wallet.filter((item) => {
     if(item.coinId =="lnd") return true
   });
-  
-
-
-  // const lndWallet = useSelector((state) => state.wallet.collection.find(item => item.id=="lnd")); //lnd
-  console.log(lndWallet);
   const coinSwapFromList = useSelector(coinSwapSelector); // coin swap láy từ listCrypto
+  //CHECK COIN SWAP
+  const temp = async () => {
+    let check = await checkWallet({
+    userId: user.userId,
+    coinId:coinSwapFromList.id
+    })
+    setCheckCoin(check);
+    console.log(checkCoin); 
+  }
+  temp();
   const coinSwapFromWallet = useSelector((state) => state.wallet.collection.find(item => item.coinId==coinSwapFromList.id));
   // const [coinSwap,setCoinSwap] = useState(coinSwapFromWallet); //coinSwap
   const lnd = {
@@ -42,7 +49,7 @@ const Swap = () => {
   // k sửa 
   var coinSwap;  
   if(coinSwapFromWallet!=undefined) {
-    let temp = {amount: coinSwapFromWallet.amount};
+    let temp = {amount: coinSwapFromWallet.quantity};
     coinSwap = {...coinSwapFromList,...temp}
   } else {
     let temp = {amount: 0};
@@ -72,11 +79,10 @@ const Swap = () => {
     if(toLnd==false) {
       setRootCoin(lnd);
     } else setDestinationCoin(lnd);
-  },[lnd])  // khi amount của lnd thay đổi, thì cập nhật lại
+  },[])  // khi amount của lnd thay đổi, thì cập nhật lại
   const handleChangeSwap = (e) => {   //nhận value Swap
     setValueSwap(e.target.value);
   }
-  console.log(lnd);
   useEffect(()=>{       // kiểm tra value swap, trả result
     if(isNaN(valueSwap) || valueSwap<=0) {
      setErrorValue(true);
@@ -84,8 +90,6 @@ const Swap = () => {
     } else {
       if(toLnd==false) // gốc swap là lnd 
       {
-        console.log("rootCoin.amount - fee");
-        console.log(rootCoin.amount - fee);
         if((valueSwap > (rootCoin.amount - fee))) {
           setErrorValue(true);
           setValueResult("Empty");
@@ -108,55 +112,62 @@ const Swap = () => {
   const handleCancel = () => {
     navigate("/home/listCryptos")
   }
-  const handleSwap = () => {
-    let coinWalletUpdate;
+  const handleSwap = async () => {
+    var coinWalletUpdate;
     if(lnd.amount<fee) {
       setFlagFee(true);
     } 
     else {
+      var tempSwap;
       if(toLnd==false) {   // rootCoin là lnd
         setFlagFee(false);
+        if(checkCoin) {  //Kiểm tra xem coin đã có trong ví chưa
+          tempSwap = {
+            coinId  : coinSwapFromList.id,
+            userId: user.userId,
+            quantityAdd:  valueResult
+          }
+        } else {
+          tempSwap = {
+            coinId  : coinSwapFromList.id,
+            userId: user.userId,
+            quantity:  valueResult
+          };
+        }
         coinWalletUpdate={
           lnd: {
-            id:"lnd",
-            changeValue: -valueSwap - fee
+            coinId:"lnd",
+            userId: user.userId,
+            quantityAdd: -valueSwap - fee
           },
-          coinSwap: {
-            id:coinSwap.id,
-            changeValue: valueResult
-          }
+          coinSwap: tempSwap
         }
+       
       } else {          // rootCoin là coinSwap
-         coinWalletUpdate = {
-          coinSwap: {
-            id:coinSwap.id,
-            changeValue: -valueSwap
-          },
+        coinWalletUpdate={
           lnd: {
-            id:"lnd",
-            changeValue: valueResult - fee
+            coinId:"lnd",
+            userId: user.userId,
+            quantityAdd: valueResult - fee
+          },
+          coinSwap:{
+            coinId  : coinSwapFromList.id,
+            userId: user.userId,
+            quantityAdd:  -valueSwap
           }
         }
       }
       if(!errorValue) {
-        if(coinSwapFromWallet !=undefined) {
-          dispatch(updateCoin(coinWalletUpdate))
+        if(!checkCoin) {
+          await addToWallet(dispatch,coinWalletUpdate.coinSwap );
+          await updateWallet(coinWalletUpdate.lnd)
         } else {
-          let temp = {amount: valueResult};
-          dispatch(addCoin({
-              coinSwap: {...coinSwap,...temp},
-              lnd: {
-                id: "lnd",
-                changeValue: -valueSwap - fee
-              }
-          }))
+          await updateWallet(coinWalletUpdate.coinSwap )
+          await updateWallet(coinWalletUpdate.lnd)
         }
-        dispatch(plusMarketCap()); //thêm một lượng fee vào lndMarketCap
+      getWallet(dispatch,user.userId);
       }
     } 
-   
-   
-    // navigate("/listCryptos")
   }
     return (
         <div className="swap">
