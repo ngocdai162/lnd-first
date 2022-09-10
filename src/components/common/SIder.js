@@ -46,6 +46,7 @@ export default function Sider() {
     }
   }
   useEffect(() => {
+    console.log("get get")
    getData();
   },[refreshWallet])
 
@@ -134,6 +135,8 @@ export default function Sider() {
    setErrorValue(false);
   }
  },[valueConvert])
+ 
+ console.log(usdWallet?.quantity);
   return (
         <div className="sider">
              <div className='sider__title'>
@@ -148,7 +151,7 @@ export default function Sider() {
             <p>Rank: <span>{lndApi.rank}</span></p>
             <p>Market Cap: <span>{lndApi.marketCap}</span></p>
             <p>Current Price (USD) : <span>{lndApi.price}</span> </p>
-            {isAdmin && <h2>Profit: <span>{(usdWallet?.quantity)?.toFixed(2)}</span></h2>}
+            {isAdmin && <p>Profit (USD): <span>{(usdWallet?.quantity)?.toFixed(2)}</span></p>}
          </div>
          {isAdmin ?  
          <div className="sider-main__action">
@@ -167,7 +170,7 @@ export default function Sider() {
                 <div className='wallet-item__title wallet-usd__title'>
                   <CryptoLogo srcImg='../images/cryptoLogo/bitcoin-btc-logo.png'/>
                   <p>USD</p>
-                  <span>Exits: {(usdWallet?.quantity)?.toFixed(2)}</span>
+                  <span>Exits: {(usdWallet?.quantity) ? (usdWallet?.quantity)?.toFixed(2) : 0}</span>
                 </div>
                 <div className="wallet-item__input">
                   <InputCustom placeholder="Convert to LND-COIN" event={handleChangeConvert}/>
@@ -180,7 +183,7 @@ export default function Sider() {
                   <CryptoLogo srcImg='../images/lnd-logo.png'/>
                   <p>LND</p> 
                   <p>Price: {lndApi.price} USD</p>
-                  <span>Exits: {(lndWallet?.quantity)?.toFixed(2)}</span>
+                  <span>Exits: {(lndWallet?.quantity) ? (lndWallet?.quantity)?.toFixed(2) : 0}</span>
                 </div>
                 <p className='result'>Result : {valueResult} LND</p>
               </div>

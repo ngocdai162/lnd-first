@@ -61,3 +61,8 @@ export const store = configureStore({
     }),
 })
 export let persistor = persistStore(store);
+
+export const resetStore = async () => {
+  await persistor.purge();
+  storage.removeItem("root");
+};

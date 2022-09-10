@@ -207,7 +207,7 @@ export default function Register() {
       await addToWallet(dispatch,{
         coinId  : "usd",
         userId: userId,
-        quantity:  Math.floor(Math.random() * 100)
+        quantity:  Math.floor(Math.random() * 1000)
       })
      }
    }

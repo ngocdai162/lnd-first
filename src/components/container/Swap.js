@@ -38,11 +38,11 @@ const Swap = () => {
   const coinSwapFromWallet = useSelector((state) => state.wallet.collection.find(item => item.coinId==coinSwapFromList.id));
   // const [coinSwap,setCoinSwap] = useState(coinSwapFromWallet); //coinSwap
   const lnd = {
-    id: lndWallet[0].coinId,
+    id: lndWallet[0]?.coinId,
     coin: "LND",
     imgSrc: "../../images/lnd-logo.png",
     price: lndApi.price,
-    amount:lndWallet[0].quantity
+    amount:lndWallet[0]?.quantity
   }
 
 

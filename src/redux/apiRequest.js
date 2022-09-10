@@ -19,6 +19,7 @@ import { getLndApi } from "./slice/lndApiSlice";
 import {getCoinApi} from "./slice/coinSlice";
 import { getCoins } from "./slice/walletSlice";
 import { fetchListCrypto } from "./slice/listCryptoSlice";
+import { resetStore } from "./store";
 
 //GET LIST CRYPTO
 export const getListCrypto= async(dispatch) => {
@@ -51,6 +52,7 @@ export const logOut = async (dispatch, userName, navigate) => {
       // headers: { token: `Bearer ${accessToken}` },
     });
     dispatch(logOutSuccess());
+    resetStore();
     navigate("/");
   } catch (err) {
     dispatch(logOutFailed());
