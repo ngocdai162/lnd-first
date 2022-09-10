@@ -14,6 +14,7 @@ import projectReducer from "./slice/projectSlice";
 import feeReducer from "./slice/feeSlice";
 import lndApiReducer from "./slice/lndApiSlice";
 import coinReducer from "./slice/coinSlice";
+import listUserReducer from "./slice/listUserSlice";
 import {
     persistStore,
     persistReducer,
@@ -45,7 +46,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     fee: feeReducer,
     lndApi: lndApiReducer,
-    coin: coinReducer
+    coin: coinReducer,
+    listUser: listUserReducer
 });
 
 
@@ -62,7 +64,7 @@ export const store = configureStore({
 })
 export let persistor = persistStore(store);
 
-export const resetStore = async () => {
-  await persistor.purge();
-  storage.removeItem("root");
-};
+// export const resetStore = async () => {
+//   await persistor.purge();
+//   storage.removeItem("root");
+// };

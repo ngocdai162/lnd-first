@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { coinChartSelector } from "../../redux/selectors";
+import { coinChartSelector, listUserSelector } from "../../redux/selectors";
 import CryptoLogo from "../modules/modules__container/CryptoLogo";
 import CoinChart from "./CoinChart";
 import LndChart from "./LndChart";
@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { usersData } from "../../config/data";
 import InputCustom from "../modules/InputCustom";
 import ButtonCustom from "../modules/ButtonCustom";
+import { getListUsers } from "../../redux/apiRequest";
 
 
 const Admin = () => {
@@ -21,6 +22,12 @@ const Admin = () => {
     const [data,setData] =useState([]);
     const [totalPages,setTotalPages] = useState(0);
     const [filteredData,setFilteredData] = useState([]);
+    const listUser = useSelector(listUserSelector);
+    useEffect(()=> {
+      getListUsers(dispatch)
+    },[])
+    console.log(listUser);
+
     const dataApi = usersData;
      
     const columns = [
@@ -42,23 +49,7 @@ const Admin = () => {
           
         }
     ];
-  //   useEffect (() => {
-  //     setFilteredData(
-  //       data.filter( (dataItem) => {
-  //         console.log("chay")
-  //         if(dataItem.userName.include(dataSearch))
-  //         {
-  //           return true;
-  //         } 
-  //         return false;
-  //       }
-  //       )
-  //     );
-  //     if(filteredData!=[]) {
-  //     console.log(filteredData)
-  //       setData(filteredData);
-  //     }
-  //  },[dataSearch])
+    
     const loadRecords = (dataIndex) => {
            setData(dataApi);
       }
@@ -71,8 +62,6 @@ const Admin = () => {
 
    }
   
-   
-   
     return (
         <div className="admin">
             <div className="admin__chart coin-info__chart">

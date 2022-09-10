@@ -19,4 +19,6 @@ export const profitProject = (state) => state.project.profit;
 export const isErrorLoginSelector = (state) => state.auth.login?.error;
 export const currentUserSelector = (state) => state.auth.login?.currentUser;
 export const coinSelector = (state) => state.coin;
+//ADMIN
+export const listUserSelector = (state) => state.listUser.data;
 

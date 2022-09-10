@@ -23,6 +23,7 @@ export default function Sider() {
   const [usdWallet,setUsdWallet] = useState();
   const [lndCheck,setLndCheck] = useState(false);
   const [refreshWallet,setReFreshWallet] = useState(false);
+  const [firstRefresh,setFirstRefresh] = useState(false)
   const fee = useSelector(feeSelector);
   // const [profit,setProfit] = useState(0);
   const inputFee = useRef();
@@ -32,8 +33,8 @@ export default function Sider() {
   },[])
   const getData = async() => {
     await getWallet(dispatch,user.userId);
+    setFirstRefresh(true)
     if(wallet) {
-      console.log("get wallet")
       let tempLnd = wallet?.filter((item) => {
         if(item.coinId =="lnd") return true
       });
@@ -41,14 +42,12 @@ export default function Sider() {
       let tempUsd = wallet?.filter((item) => {
         if(item.coinId =="usd") return true
       });
-      console.log(tempUsd);
       setUsdWallet(tempUsd[0])
     }
   }
   useEffect(() => {
-    console.log("get get")
    getData();
-  },[refreshWallet])
+  },[refreshWallet, firstRefresh]);
 
   //CHECK WALLET
   const handleCheck = async () => {
@@ -79,7 +78,6 @@ export default function Sider() {
       getFee(dispatch);
     }
   }
-  console.log(usdWallet?.quantity);
   //MODAL
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
@@ -136,7 +134,7 @@ export default function Sider() {
   }
  },[valueConvert])
  
- console.log(usdWallet?.quantity);
+
   return (
         <div className="sider">
              <div className='sider__title'>

@@ -4,6 +4,8 @@ export const API_LOGOUT = "http://localhost:8080/user/logout";
 export const API_REGISTER ="http://localhost:8080/user/register";
 export const API_UPDATE = "http://localhost:8080/user/update";
 
+//ADMIN
+export const API_LIST_USER = "http://localhost:8080/user/all"
 
 //FEE
 export const API_UPDATE_FEE = "http://localhost:8080/fee/update";

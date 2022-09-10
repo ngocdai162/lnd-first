@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { API_LISTCRYPTO, LNDCoin, SingleCoin } from "../config/api";
-import { API_ADD_COIN, API_CHECK_WALLET, API_CREATE_WALLET, API_DISABLE_FEE, API_GET_FEE, API_GET_WALLET, API_LOGIN, API_LOGOUT, API_REGISTER, API_UPDATE, API_UPDATE_COIN, API_UPDATE_FEE } from "../constants/api";
+import { API_ADD_COIN, API_CHECK_WALLET, API_CREATE_WALLET, API_DISABLE_FEE, API_GET_FEE, API_GET_WALLET, API_LIST_USER, API_LOGIN, API_LOGOUT, API_REGISTER, API_UPDATE, API_UPDATE_COIN, API_UPDATE_FEE } from "../constants/api";
 import { currentUserSelector } from "./selectors";
 import {
   loginFailed,
@@ -19,7 +19,8 @@ import { getLndApi } from "./slice/lndApiSlice";
 import {getCoinApi} from "./slice/coinSlice";
 import { getCoins } from "./slice/walletSlice";
 import { fetchListCrypto } from "./slice/listCryptoSlice";
-import { resetStore } from "./store";
+// import { resetStore } from "./store";
+import { fetchListUser } from "./slice/listUserSlice";
 
 //GET LIST CRYPTO
 export const getListCrypto= async(dispatch) => {
@@ -52,7 +53,7 @@ export const logOut = async (dispatch, userName, navigate) => {
       // headers: { token: `Bearer ${accessToken}` },
     });
     dispatch(logOutSuccess());
-    resetStore();
+    // resetStore();
     navigate("/");
   } catch (err) {
     dispatch(logOutFailed());
@@ -75,6 +76,17 @@ export const registerUser = async (user, dispatch, navigate) => {
 export const updateUser= async(id,newData,dispatch) => {
   try {
     await axios.put(`${API_UPDATE}/${id}`, newData);
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+//GET USER
+export const getListUsers= async(dispatch) => {
+  try {
+    const res = await axios.get(API_LIST_USER);
+    dispatch(fetchListUser(res.data.result));
+    console.log(res.data.result)
   } catch (err) {
     console.log(err)
   }
